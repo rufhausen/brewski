@@ -1,0 +1,30 @@
+#footer {
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+#post {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.sidebar {
+    margin-top: 10px;
+}
+
+code {
+    display: block;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 20px;
+}

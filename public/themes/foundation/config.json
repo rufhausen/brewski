@@ -1,0 +1,14 @@
+{
+    "name": "Foundation",
+    "author": "Gary Taylor",
+    "version": "1.0",
+    "layouts": {
+        "default": "default",
+        "2-column-sidebar-right": "2-column-sidebar-right"
+    },
+    "widgets": [
+        "right-sidebar",
+        "left-sidebar",
+        "right-header"
+    ]
+}

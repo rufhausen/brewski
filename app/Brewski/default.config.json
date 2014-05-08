@@ -1,0 +1,11 @@
+{
+    "site_name": "Another Brewski Web site",
+    "admin_email": "email@email.com",
+    "home_page": "blog",
+    "posts_per_page": "5",
+    "google_analytics_id": "",
+    "keywords": "",
+    "description": "",
+    "theme": "default",
+    "disqus_shortname" : ""
+}
