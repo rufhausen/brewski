@@ -58,7 +58,7 @@ class Push extends Command {
         $this->info('Git Push Complete');
 
         $commands = [
-            'cd' . $git_repo,
+            'cd /var/git/thereluctantdeveloper.com.git',
             'GIT_WORK_TREE=' . $remote_path . ' git checkout master -f',
             'cd ' . $remote_path,
             'php artisan cache:clear',
