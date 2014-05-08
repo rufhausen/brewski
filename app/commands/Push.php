@@ -38,12 +38,15 @@ class Push extends Command {
     public function fire()
     {
         //Vars
-        $remote                   = $this->argument('remote');
+        $remote = $this->argument('remote');
         //old habits die hard.
         if ($remote == 'prod')
+        {
             $remote = 'production';
+        }
         $version_file             = 'version.txt';
-        $remote_path              = Config::get('remote.connections.'.$remote.'.root');
+        $remote_path              = Config::get('remote.connections.' . $remote . '.root');
+        $git_repo                 = Config::get('remote.connections' . $remote . '.git_repo');
         $local_version_file_path  = base_path() . '/' . $version_file;
         $remote_version_file_path = $remote_path . '/' . $version_file;
 
@@ -55,12 +58,12 @@ class Push extends Command {
         $this->info('Git Push Complete');
 
         $commands = [
-            'cd /var/git/thereluctantdeveloper.com.git',
+            'cd' . $git_repo,
             'GIT_WORK_TREE=' . $remote_path . ' git checkout master -f',
             'cd ' . $remote_path,
             'php artisan cache:clear',
-            //'rm -f app/storage/cache/*',
-            //'rm -f app/storage/views/*',
+            'rm -f app/storage/cache/*',
+            'rm -f app/storage/views/*',
             'composer install',
             'php artisan migrate',
             'chmod 774 -R ' . $remote_path . ' -f'
@@ -69,7 +72,7 @@ class Push extends Command {
         //Remote Commands
         SSH::into($remote)->run($commands);
         $this->info('Git Checkout Complete');
-        SSH::into($remote)->put($local_version_file_path,$remote_version_file_path);
+        SSH::into($remote)->put($local_version_file_path, $remote_version_file_path);
         $this->info('Version File Updated');
         $this->info('Operation Complete!');
     }
