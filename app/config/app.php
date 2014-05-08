@@ -119,7 +119,6 @@ return array(
         'GrahamCampbell\Markdown\MarkdownServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Barryvdh\HttpCache\ServiceProvider',
-        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 
     ),
     /*

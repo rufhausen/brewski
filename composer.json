@@ -4,7 +4,6 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "ext-gd": "*",
         "laravel/framework": "4.1.28",
         "doctrine/dbal": "2.4.2",
         "guzzlehttp/guzzle": "4.0.2",
@@ -13,8 +12,9 @@
         "way/generators": "2.6",
         "barryvdh/laravel-debugbar": "1.6.0",
         "intervention/image": "1.*",
-        "barryvdh/laravel-ide-helper": "1.*",
-        "barryvdh/laravel-httpcache": "dev-master"
+        "barryvdh/laravel-httpcache": "dev-master",
+        "roumen/sitemap": "dev-master",
+        "roumen/feed": "dev-master"
     },
     "require-dev": {
 
@@ -43,7 +43,6 @@
         "post-update-cmd": [
             "php artisan clear-compiled",
             "php artisan optimize",
-            "php artisan ide-helper:generate",
             "php artisan debugbar:publish"
         ],
         "post-create-project-cmd": [
