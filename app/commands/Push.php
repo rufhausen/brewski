@@ -46,7 +46,7 @@ class Push extends Command {
         }
         $version_file             = 'version.txt';
         $remote_path              = Config::get('remote.connections.' . $remote . '.root');
-        $git_repo                 = Config::get('remote.connections' . $remote . '.git_repo');
+        $git_repo                 = Config::get('remote.connections.' . $remote . '.git_repo');
         $local_version_file_path  = base_path() . '/' . $version_file;
         $remote_version_file_path = $remote_path . '/' . $version_file;
 
@@ -58,11 +58,11 @@ class Push extends Command {
         $this->info('Git Push Complete');
 
         $commands = [
-            'cd /var/git/thereluctantdeveloper.com.git',
+            'cd '.$git_repo,
             'GIT_WORK_TREE=' . $remote_path . ' git checkout master -f',
             'cd ' . $remote_path,
             'php artisan cache:clear',
-            'rm -f app/storage/cache/*',
+            //'rm -f app/storage/cache/*',
             'rm -f app/storage/views/*',
             'composer install',
             'php artisan migrate',

@@ -27,3 +27,8 @@ at [http://thereluctantdeveloper.com](http://thereluctantdeveloper.com).
 - Update the UsersTableSeeder with your info.
 - run `php artisan migrate --seed` to populate the database and add the admin user
 - Fix the other stuff that's likely to still be broken after doing the above
+
+
+####License
+
+Brewski is free software distributed under the terms of the MIT license.
