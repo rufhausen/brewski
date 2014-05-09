@@ -17,7 +17,7 @@ interface PostInterface {
 
     public function destroy($id);
 
-    public function getRecentlyPublished();
+    public function getPublished($num = null, $order_by = 'published_at', $sort_order = 'DESC');
 
     public function getByCategorySlug($slug, $per_page = null);
 }

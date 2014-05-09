@@ -39,7 +39,7 @@ return array(
      | This can also be set to 'js' or 'css', to only include javascript or css vendor files.
      | Vendor files are for css: font-awesome (including fonts) and highlight.js (css files)
      | and for js: jquery and and highlight.js
-     | So if you want syntax highlighting, set it to true. 
+     | So if you want syntax highlighting, set it to true.
      | jQuery is set to not conflict with existing jQuery scripts.
      |
      */
@@ -57,7 +57,7 @@ return array(
      */
 
     'capture_ajax' => true,
-    
+
     /*
      |--------------------------------------------------------------------------
      | Capture Console Commands
@@ -80,15 +80,15 @@ return array(
 
     'collectors' => array(
         'phpinfo'         => true,  // Php version
-        'messages'        => true,  // Messages
+        'messages'        => false,  // Messages
         'time'            => true,  // Time Datalogger
         'memory'          => true,  // Memory usage
         'exceptions'      => true,  // Exception displayer
-        'log'             => true,  // Logs from Monolog (merged in messages if enabled)
+        'log'             => false,  // Logs from Monolog (merged in messages if enabled)
         'db'              => true,  // Show database (PDO) queries and bindings
         'views'           => true,  // Views with their data
         'route'           => true,  // Current route information
-        'laravel'         => false, // Laravel version and environment
+        'laravel'         => true, // Laravel version and environment
         'events'          => false, // All events fired
         'default_request' => false, // Regular or special Symfony request logger
         'symfony_request' => true,  // Only one can be enabled..

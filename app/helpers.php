@@ -31,6 +31,11 @@ function getCmsVersion()
 
     if (File::exists($version_file))
     {
-        return File::get($version_file);
+        $version = File::get($version_file);
+
+        if(strstr($version, '-'))
+            $version = strstr($version,'-',true);
+
+        return $version;
     }
 }

@@ -9,8 +9,6 @@ class AuthController extends \BaseController {
 
     public function login()
     {
-        //$user = User::whereEmail(Input::get('email'))->wherePassword(Input::get('password'));
-
         if (!Auth::attempt(['email' => Input::get('email'), 'password' => Input::get('password')]))
         {
             return Redirect::back()->withError('Email or Password not correct');

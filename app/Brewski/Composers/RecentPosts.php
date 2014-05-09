@@ -12,6 +12,6 @@ class RecentPosts {
 
     public function compose($view)
     {
-        $view->with('recent_posts', $this->post->getRecentlyPublished()->get());
+        $view->with('recent_posts', $this->post->getPublished(5));
     }
 }

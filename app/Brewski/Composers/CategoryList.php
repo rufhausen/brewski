@@ -1,11 +1,16 @@
 <?php  namespace Brewski\Composers;
 
-use Category;
+use Brewski\Repositories\CategoryInterface;
+
 
 class CategoryList {
 
+    public function __construct(CategoryInterface $category)
+    {
+        $this->category = $category;
+    }
     public function compose($view)
     {
-        $view->with('categoryList', Category::all());
+        $view->with('categoryList', $this->category->all());
     }
 }

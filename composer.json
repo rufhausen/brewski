@@ -4,7 +4,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "laravel/framework": "4.1.28",
+        "laravel/framework": "4.1.*",
         "doctrine/dbal": "2.4.2",
         "guzzlehttp/guzzle": "4.0.2",
         "fzaninotto/faker": "v1.3.0",

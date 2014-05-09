@@ -25,9 +25,17 @@ class PostEloquent extends BaseEloquent implements PostInterface {
 
     }
 
-    public function getRecentlyPublished($num = 5)
+    public function getPublished($num = null, $order_by = 'published_at', $sort_order = 'DESC')
     {
-        return Post::published()->orderBy('published_at', 'DESC')->limit($num);
+        $posts = Post::published()->orderBy($order_by, $sort_order);
+
+        if (!is_null($num))
+        {
+           $posts = $posts->limit($num);
+        }
+
+        return $posts->get();
+
     }
 
     public function getByCategorySlug($slug, $per_page = null)
@@ -82,7 +90,7 @@ class PostEloquent extends BaseEloquent implements PostInterface {
                 $post->title          = Input::get('title');
                 $post->content        = Input::get('content');
                 $post->creator_id     = Auth::user()->id;
-                $post->allow_comments = (Input::get('allow_comments') == 'on' ? 1 : null);
+                $post->allow_comments = ( Input::get('allow_comments') == 'on' ? 1 : null );
 
                 if (Input::get('status') == 'published')
                 {
@@ -173,7 +181,7 @@ class PostEloquent extends BaseEloquent implements PostInterface {
                 $post                 = Post::find($id);
                 $post->title          = Input::get('title');
                 $post->content        = Input::get('content');
-                $post->allow_comments = (Input::get('allow_comments') == 'on' ? 1 : null);
+                $post->allow_comments = ( Input::get('allow_comments') == 'on' ? 1 : null );
                 if (Input::get('status') == 'published')
                 {
                     $post->status = 'published';

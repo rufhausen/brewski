@@ -12,7 +12,7 @@ return array(
     | Set the cache to a writable dir, outside the document root.
     |
     */
-    'enabled' => true,
+    'enabled' => Config::get('app.debug'),
     'esi' => false,
     'cache_dir' => storage_path().'/cache/httpcache',
 

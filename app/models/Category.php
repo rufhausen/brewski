@@ -4,7 +4,7 @@ class Category extends \Eloquent {
 
     protected $fillable = ['name', 'slug'];
 
-    public function post()
+    public function posts()
     {
         return $this->belongsToMany('Post');
     }

@@ -1,7 +1,5 @@
 <?php namespace Brewski\Controllers\Admin;
 
-use Brewski\Repositories\PageInterface;
-
 use View;
 use Input;
 use Theme;
@@ -11,9 +9,9 @@ use File;
 
 class OptionsController extends \BaseController {
 
-    public function __construct(PageInterface $page)
+    public function __construct()
     {
-        $this->page = $page;
+
     }
 
     public function getIndex()
@@ -21,9 +19,7 @@ class OptionsController extends \BaseController {
         $options = json_decode(File::get(app_path() . '/Brewski/config.json'));
         $themes  = Theme::getThemes();
 
-        //$pages   = $this->page->lists('title', 'id');
-
-        return View::make('Admin::options.index', compact('options', 'pages', 'themes'));
+        return View::make('Admin::options.index', compact('options', 'themes'));
     }
 
     public function putUpdate()
@@ -31,14 +27,13 @@ class OptionsController extends \BaseController {
         $options = [
             'site_name'           => Input::get('site_name'),
             'admin_email'         => Input::get('admin_email'),
-            'home_page'           => Input::get('home_page'),
-            //'home_page_id'        => Input::get('home_page_id'),
             'posts_per_page'      => Input::get('posts_per_page'),
             'google_analytics_id' => Input::get('google_analytics_id'),
             'keywords'            => Input::get('keywords'),
+            'cache_time'          => Input::get('cache_time'),
             'description'         => Input::get('description'),
             'theme'               => Input::get('theme'),
-            'disqus_shortname'   => Input::get('disqus_shortname'),
+            'disqus_shortname'    => Input::get('disqus_shortname'),
         ];
 
         File::put(app_path() . '/Brewski/config.json', json_encode($options, JSON_PRETTY_PRINT));
@@ -51,6 +46,7 @@ class OptionsController extends \BaseController {
     public function getClearCache()
     {
         \File::cleanDirectory(app('http_cache.cache_dir'));
+        \Artisan::call('cache:clear');
 
         return Redirect::back()->withSuccess('Cache Cleared!');
     }

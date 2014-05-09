@@ -15,13 +15,6 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4 form-group">
-        {{Form::label('home_page')}}
-        {{Form::select('home_page',['blog' => 'Latest Blog Posts','page' => 'Page'],$options->home_page,['class' =>
-        'form-control'])}}
-    </div>
-</div>
-<div class="row">
     <div class="col-md-2 form-group">
         {{Form::label('posts_per_page')}}
         {{Form::select(
@@ -48,6 +41,12 @@
     <div class="col-md-5 form-group">
         {{Form::label('theme','Theme')}}
         {{Form::select('theme',$themes,$options->theme, ['class' => 'form-control'])}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 form-group">
+        {{Form::label('cache_time','Cache Time (in seconds)')}}
+        {{Form::text('cache_time', $options->cache_time, ['class' => 'form-control'])}}
     </div>
 </div>
 <div class="row">

@@ -11,7 +11,8 @@
 |
 */
 
-Route::group(['after' => 'cache:600'], function ()
+Route::group([
+    'after' => 'cache:'. ((isset(Cache::get('options')->cache_time )) ? (int) Cache::get('options')->cache_time : 0)], function ()
 {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
@@ -25,15 +26,13 @@ Route::group(['after' => 'cache:600'], function ()
 });
 
 Route::post('contact', 'HomeController@postContact');
-
 Route::controller('password', 'RemindersController');
+Route::get('sitemap', 'HomeController@getSiteMap');
+Route::get('feed', 'HomeController@getFeed');
 
 Route::get('test', function ()
 {
-    $categories = Category::with('post')->get()->toArray();
-
-    dd($categories);
-
+    return Cache::get('options')['posts_per_page'];
 });
 
 Route::group(['prefix' => 'admin'], function ()
@@ -57,68 +56,4 @@ Route::group(['prefix' => 'admin'], function ()
     });
 });
 
-Route::get('sitemap', function(){
 
-    // create new sitemap object
-    $sitemap = App::make("sitemap");
-
-    // set cache (key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean))
-    // by default cache is disabled
-    //$sitemap->setCache('laravel.sitemap', 3600);
-
-    // add item to the sitemap (url, date, priority, freq)
-    $sitemap->add(URL::to('contact'), date('Y-m-d').'T12:30:00+02:00', '0.5', 'monthly');
-    // get all posts from db
-    $posts = Post::published()->orderBy('created_at', 'desc')->get();
-
-    foreach ($posts as $post)
-    {
-        //dd($post->url);
-        $sitemap->add($post->url, $post->updated_at, '1.0', 'daily', null, htmlspecialchars($post->title));
-    }
-
-    $categories = Category::all();
-
-    foreach ($categories as $category)
-    {
-        $sitemap->add(Request::root() . '/category/' . $category->slug, $category->updated_at, '1.0', 'daily', null, htmlspecialchars($category->name));
-    }
-
-    // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
-    return $sitemap->render('xml');
-
-});
-
-Route::get('feed', function(){
-
-    // creating rss feed with our most recent 20 posts
-    $posts = Post::published()->orderBy('published_at', 'desc')->take(20)->get();
-
-    $feed = Feed::make();
-
-    // set your feed's title, description, link, pubdate and language
-    $feed->title = Cache::get('options')->site_name;
-    $feed->description = Cache::get('options')->description;
-    $feed->logo = '';
-    $feed->link = URL::to('feed');
-    $feed->pubdate = $posts[0]->published_at;
-    $feed->lang = 'en';
-
-    foreach ($posts as $post)
-    {
-        // set item's title, author, url, pubdate, description and content
-        $feed->add($post->title, $post->creator->full_name, URL::to($post->slug), $post->published_at, htmlentities($post->intro), htmlentities($post->content));
-    }
-
-    // show your feed (options: 'atom' (recommended) or 'rss')
-    return $feed->render('atom');
-
-    // show your feed with cache for 60 minutes
-    // second param can be integer, carbon or datetime
-    // optional: you can set custom cache key with 3rd param as string
-    return $feed->render('atom', 60);
-
-    // to return your feed as a string set second param to -1
-    $xml = $feed->render('atom', -1);
-
-});
