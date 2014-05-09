@@ -8,7 +8,7 @@
         @endif
         @if (count($errors->all()) > 0)
         @foreach ($errors->all(':message') as $error)
-        <div class="alert alert-danger"><span style="color:white;">{{$error}}</span></div>
+        <div class="alert alert-danger">{{$error}}</div>
         @endforeach
         @endif
     </div>
