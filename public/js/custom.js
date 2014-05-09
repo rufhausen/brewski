@@ -1,5 +1,18 @@
 $(function () {
 
+    $('#basic a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+    $('#seo a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+    $('#advanced a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+
     $("textarea").markdown({
         additionalButtons: [
             [
