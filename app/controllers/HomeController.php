@@ -21,9 +21,10 @@ class HomeController extends BaseController {
 
     public function search()
     {
-        $q = htmlentities(Input::get('q'));
+        $q     = htmlentities(Input::get('q'));
+        $posts = $this->post->search($q);
 
-        return View::make(Theme::getViewPath() . 'search', compact('q'));
+        return View::make(Theme::getViewPath() . 'search', compact('q', 'posts'));
     }
 
     public function post()
@@ -95,14 +96,14 @@ class HomeController extends BaseController {
         $feed = Feed::make();
 
         // set your feed's title, description, link, pubdate and language
-        $feed->title = Cache::get('options')->site_name;
+        $feed->title       = Cache::get('options')->site_name;
         $feed->description = Cache::get('options')->description;
-        $feed->logo = '';
-        $feed->link = URL::to('feed');
-        $feed->pubdate = $posts{0}->published_at;
-        $feed->lang = 'en';
+        $feed->logo        = '';
+        $feed->link        = URL::to('feed');
+        $feed->pubdate     = $posts{0}->published_at;
+        $feed->lang        = 'en';
 
-        foreach ($posts as $post)
+        foreach ( $posts as $post )
         {
             // set item's title, author, url, pubdate, description and content
             $feed->add($post->title, $post->creator->full_name, URL::to($post->slug), $post->published_at, htmlentities($post->intro), htmlentities($post->content));
@@ -130,11 +131,11 @@ class HomeController extends BaseController {
         //$sitemap->setCache('laravel.sitemap', 3600);
 
         // add item to the sitemap (url, date, priority, freq)
-        $sitemap->add(URL::to('contact'), date('Y-m-d').'T12:30:00+02:00', '0.5', 'monthly');
+        $sitemap->add(URL::to('contact'), date('Y-m-d') . 'T12:30:00+02:00', '0.5', 'monthly');
         // get all posts from db
         $posts = $this->post->getPublished();
 
-        foreach ($posts as $post)
+        foreach ( $posts as $post )
         {
             //dd($post->url);
             $sitemap->add($post->url, $post->updated_at, '1.0', 'daily', null, htmlspecialchars($post->title));
@@ -142,7 +143,7 @@ class HomeController extends BaseController {
 
         $categories = $this->category->all();
 
-        foreach ($categories as $category)
+        foreach ( $categories as $category )
         {
             $sitemap->add(Request::root() . '/category/' . $category->slug, $category->updated_at, '1.0', 'daily', null, htmlspecialchars($category->name));
         }

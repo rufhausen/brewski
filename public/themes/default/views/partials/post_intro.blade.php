@@ -1,9 +1,9 @@
 <div class="post-item">
     <article>
         <heading>
-            <h2 style="margin-bottom: 0px;">
+            <h3 style="margin-bottom: 0px;">
                 {{link_to_route('post', $post->title, [$post->year,$post->month,$post->slug])}}
-            </h2>
+            </h3>
             <small style="font-size: 13px;font-weight: 400">
                 <strong>{{$post->published_at->format('F j, Y')}}</strong>
             </small>

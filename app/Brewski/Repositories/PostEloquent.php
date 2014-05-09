@@ -22,7 +22,9 @@ class PostEloquent extends BaseEloquent implements PostInterface {
 
     public function search($q)
     {
-
+        return Post::where('title', 'LIKE', '%' . $q . '%')
+                   ->orWhere('content', 'LIKE', '%' . $q . '%')
+                   ->get();
     }
 
     public function getPublished($num = null, $order_by = 'published_at', $sort_order = 'DESC')
@@ -31,7 +33,7 @@ class PostEloquent extends BaseEloquent implements PostInterface {
 
         if (!is_null($num))
         {
-           $posts = $posts->limit($num);
+            $posts = $posts->limit($num);
         }
 
         return $posts->get();
