@@ -31,6 +31,9 @@ App::missing(function($exception)
     return Response::view('Themes::' . Cache::get('options')->theme . '.views.404', array(), 404);
 });
 
+Route::filter('cache', function($route, $request, $response, $age=60){
+    $response->setTtl($age);
+});
 /*
 |--------------------------------------------------------------------------
 | Authentication Filters

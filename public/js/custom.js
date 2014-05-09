@@ -40,4 +40,8 @@ $(function () {
 
     $('#datetimepicker1').datetimepicker();
 
+    $('#reset-slug').on('click', function() {
+        $('.slug').val($('#title').val().replace(/\s/g, '-').replace(/[^\w/-]/g, '').toLowerCase());
+    });
+
 });

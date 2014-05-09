@@ -34,11 +34,6 @@ class Post extends \Eloquent {
         return ['created_at', 'updated_at', 'published_at'];
     }
 
-    public function getUrl()
-    {
-        return url($this->year . '/' . $this->month . '/' . $this->slug);
-    }
-
     public function getMonthAttribute()
     {
         return $this->published_at->format('m');
@@ -47,6 +42,11 @@ class Post extends \Eloquent {
     public function getYearAttribute()
     {
         return $this->published_at->format('Y');
+    }
+
+    public function getUrlAttribute()
+    {
+        return url($this->year . '/' . $this->month . '/' . $this->slug);
     }
 
     public function getIntroAttribute()

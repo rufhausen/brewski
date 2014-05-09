@@ -62,7 +62,7 @@ class Push extends Command {
             'GIT_WORK_TREE=' . $remote_path . ' git checkout master -f',
             'cd ' . $remote_path,
             'php artisan cache:clear',
-            //'rm -f app/storage/cache/*',
+            'php artisan httpcache:clear',
             'rm -f app/storage/views/*',
             'composer install',
             'php artisan migrate',

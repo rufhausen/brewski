@@ -119,6 +119,8 @@ return array(
         'GrahamCampbell\Markdown\MarkdownServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Barryvdh\HttpCache\ServiceProvider',
+        'Roumen\Sitemap\SitemapServiceProvider',
+        'Roumen\Feed\FeedServiceProvider',
 
     ),
     /*
@@ -187,6 +189,7 @@ return array(
         'Markdown'    => 'GrahamCampbell\Markdown\Facades\Markdown',
         'Theme'       => 'Brewski\Facades\Theme',
         'Image'       => 'Intervention\Image\Facades\Image',
+        'Feed'        => 'Roumen\Feed\Facades\Feed',
 
     ),
 

@@ -109,6 +109,8 @@ class PostEloquent extends BaseEloquent implements PostInterface {
 
                 $this->setCategories($post, Input::get('category_id'), Input::get('new_category'));
 
+                \File::cleanDirectory(app('http_cache.cache_dir'));
+
             });
         }
 
@@ -192,6 +194,8 @@ class PostEloquent extends BaseEloquent implements PostInterface {
                 $post->slug = $this->setSlug($post);
 
                 $this->setCategories($post, Input::get('category_id'), Input::get('new_category'));
+
+                \File::cleanDirectory(app('http_cache.cache_dir'));
             });
         }
     }
