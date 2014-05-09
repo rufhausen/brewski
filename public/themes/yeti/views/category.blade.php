@@ -4,7 +4,7 @@
 @section('content')
 @if($posts->count())
 @foreach ($posts as $post)
-@include('Themes::'.Cache::get('options')->theme.'.views.partials.post_intro')
+@include(Theme::getPartialpath().'post_intro')
 @endforeach
 <div id="pagination">
     {{$posts->links()}}

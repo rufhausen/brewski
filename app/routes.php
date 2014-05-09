@@ -26,6 +26,7 @@ Route::group([
 });
 
 Route::post('contact', 'HomeController@postContact');
+Route::get('search','HomeController@search');
 Route::controller('password', 'RemindersController');
 Route::get('sitemap', 'HomeController@getSiteMap');
 Route::get('feed', 'HomeController@getFeed');

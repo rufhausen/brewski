@@ -38,6 +38,7 @@ class OptionsController extends \BaseController {
 
         File::put(app_path() . '/Brewski/config.json', json_encode($options, JSON_PRETTY_PRINT));
 
+        \File::cleanDirectory(app('http_cache.cache_dir'));
         Cache::forget('options');
 
         return Redirect::back()->withSuccess('Options Updated!');

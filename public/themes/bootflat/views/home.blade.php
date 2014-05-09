@@ -3,9 +3,6 @@
 @section('meta-description', Cache::get('description'))
 @section('content')
 @if($posts->count())
-<div id="pagination">
-    {{$posts->links()}}
-</div>
 @foreach ($posts as $post)
 @include('Themes::'.Cache::get('options')->theme.'.views.partials.post_intro')
 @endforeach

@@ -16,7 +16,14 @@ class HomeController extends BaseController {
     {
         $posts = $this->post->paginate(Cache::get('options')->posts_per_page, 'published', 'published_at', 'DESC');
 
-        return View::make('Themes::' . Cache::get('options')->theme . '.views.home', compact('posts'));
+        return View::make(Theme::getViewPath() . 'home', compact('posts'));
+    }
+
+    public function search()
+    {
+        //dd(Input::all());
+
+        return View::make(Theme::getViewPath() . 'search');
     }
 
     public function post()
@@ -29,7 +36,7 @@ class HomeController extends BaseController {
             return App::abort(404);
         }
 
-        return View::make('Themes::' . Cache::get('options')->theme . '.views.post', compact('post'));
+        return View::make(Theme::getViewPath() . 'post', compact('post'));
     }
 
     public function category()
@@ -43,12 +50,12 @@ class HomeController extends BaseController {
             return App::abort(404);
         }
 
-        return View::make('Themes::' . Cache::get('options')->theme . '.views.category', compact('posts', 'category'));
+        return View::make(Theme::getViewPath() . 'category', compact('posts', 'category'));
     }
 
     public function contact()
     {
-        return View::make('Themes::' . Cache::get('options')->theme . '.views.contact');
+        return View::make(Theme::getViewPath() . 'contact');
     }
 
     public function postContact()
@@ -69,7 +76,7 @@ class HomeController extends BaseController {
 
         $data = Input::all();
 
-        Mail::send('Themes::' . Cache::get('options')->theme . '.views.email.contact', $data, function ($message)
+        Mail::send(Theme::getViewPath() . 'email.contact', $data, function ($message)
         {
             $message
                 ->from(Input::get('email'), Input::get('name'))

@@ -48,8 +48,8 @@ class MediaController extends \BaseController {
 
         $media = $this->media->destroy(Input::get('id'));
 
-        File::delete(Config::get('blog.media_path') . $media->filename);
-        File::delete(Config::get('blog.media_path') . 'thumb_' . $media->filename);
+        File::delete(Config::get('brewski.media_path') . $media->filename);
+        File::delete(Config::get('brewski.media_path') . 'thumb_' . $media->filename);
 
 
         return Redirect::action('Brewski\Controllers\Admin\MediaController@getIndex')

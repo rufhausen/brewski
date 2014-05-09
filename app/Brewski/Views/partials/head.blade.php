@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>{{Config::get('blog.app_name')}}</title>
+    <title>{{Cache::get('options')->site_name}}</title>
     {{HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')}}
     {{HTML::script('//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')}}
     {{HTML::script('/js/bootstrap-markdown.js')}}

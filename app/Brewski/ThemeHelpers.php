@@ -61,12 +61,22 @@ class ThemeHelpers {
 
     public static function getLayoutPath()
     {
-        return 'Themes::' . Cache::get('options')->theme . '.layouts.';
+        return 'Themes::' . Cache::get('options')->theme . '.views.layouts.';
+    }
+
+    public static function getPartialPath()
+    {
+        return 'Themes::' . Cache::get('options')->theme . '.views.partials.';
     }
 
     public static function getUrlPath()
     {
         return Request::root() . '/themes/' . Cache::get('options')->theme;
+    }
+
+    public static function getWidgetPath()
+    {
+        return 'Themes::' . Cache::get('options')->theme . '.views.widgets.';
     }
 
 }

@@ -1,4 +1,4 @@
-@extends('Themes::'.Cache::get('options')->theme.'.layouts.'.$post->layout)
+@extends(Theme::getLayoutPath() . 'default')
 @section('title',$post->title)
 @section('meta-description', htmlentities($post->intro))
 @section('content')
