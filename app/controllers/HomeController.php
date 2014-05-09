@@ -21,9 +21,9 @@ class HomeController extends BaseController {
 
     public function search()
     {
-        //dd(Input::all());
+        $q = htmlentities(Input::get('q'));
 
-        return View::make(Theme::getViewPath() . 'search');
+        return View::make(Theme::getViewPath() . 'search', compact('q'));
     }
 
     public function post()
