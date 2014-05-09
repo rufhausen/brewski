@@ -121,6 +121,7 @@ return array(
         'Barryvdh\HttpCache\ServiceProvider',
         'Roumen\Sitemap\SitemapServiceProvider',
         'Roumen\Feed\FeedServiceProvider',
+        'Greggilbert\Recaptcha\RecaptchaServiceProvider',
 
     ),
     /*

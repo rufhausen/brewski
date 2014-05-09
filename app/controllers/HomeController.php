@@ -65,8 +65,16 @@ class HomeController extends BaseController {
         $rules = array(
             'name'    => 'required|max:200',
             'email'   => 'required|email',
-            'content' => 'required|max: 1000'
+            'content' => 'required|max: 1000',
+
         );
+
+        if (Cache::get('options')->recaptcha_enabled)
+        {
+            $recaptcha_rule = ['recaptcha_response_field' => 'required|recaptcha'];
+            $rules          = array_merge($rules, $recaptcha_rule);
+        }
+
 
         $validation = Validator::make(Input::all(), $rules);
 

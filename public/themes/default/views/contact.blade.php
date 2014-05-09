@@ -22,6 +22,13 @@
                 {{Form::textarea('content',null,['rows' => '15','class' => 'form-control','placeholder' => 'Message'])}}
             </div>
         </div>
+        @if(Cache::get('options')->recaptcha_enabled)
+        <div class="row">
+            <div class="form-group col-md-12">
+                {{Form::captcha()}}
+            </div>
+        </div>
+        @endif
         {{Form::submit('Send Message', ['class' => 'btn btn-primary'])}}
         {{Form::close()}}
     </div>

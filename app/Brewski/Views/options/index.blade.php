@@ -49,6 +49,25 @@
         {{Form::text('cache_time', $options->cache_time, ['class' => 'form-control'])}}
     </div>
 </div>
+<div class="panel panel-danger">
+    <div class="panel-heading">ReCaptcha</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label>
+            	{{ Form::checkbox('recaptcha_enabled', '1', $options->recaptcha_enabled,  ['id' => 'recaptcha_enabled']) }}
+            	Enable ReCaptcha
+            </label>
+        </div>
+            <div class="form-group">
+                {{Form::label('recaptcha_public_key','ReCaptcha Public Key')}}
+                {{Form::text('recaptcha_public_key', $options->recaptcha_public_key, ['class' => 'form-control'])}}
+            </div>
+            <div class="form-group">
+                {{Form::label('recaptcha_private_key','ReCaptcha Private Key')}}
+                {{Form::text('recaptcha_private_key', $options->recaptcha_private_key, ['class' => 'form-control'])}}
+            </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-3 form-group">
         {{Form::label('google_analytics_id','Google Analytic ID')}}
