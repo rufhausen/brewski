@@ -18,7 +18,7 @@
     {{HTML::style(Theme::getUrlPath(). '/css/bootstrap.min.css')}}
     {{HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')}}
     {{HTML::script('//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')}}
-    {{HTML::script(Theme::getUrlPath() . '/run_prettify.js')}}
+    {{HTML::script(Theme::getUrlPath() . '/js/run_prettify.js')}}
     {{HTML::style(Theme::getUrlPath() . '/css/prettify.css')}}
     {{HTML::style(Theme::getUrlPath() . '/css/styles.css')}}
 
