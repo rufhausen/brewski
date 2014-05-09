@@ -7,17 +7,18 @@
         "laravel/framework": "4.1.*",
         "doctrine/dbal": "2.4.2",
         "guzzlehttp/guzzle": "4.0.2",
-        "fzaninotto/faker": "v1.3.0",
         "graham-campbell/markdown": "1.1.*",
-        "way/generators": "2.6",
-        "barryvdh/laravel-debugbar": "1.6.0",
+
         "intervention/image": "1.*",
         "barryvdh/laravel-httpcache": "dev-master",
         "roumen/sitemap": "dev-master",
-        "roumen/feed": "dev-master"
+        "roumen/feed": "dev-master",
+        "greggilbert/recaptcha": "dev-master"
     },
     "require-dev": {
-
+        "way/generators": "2.6",
+        "fzaninotto/faker": "v1.3.0",
+        "barryvdh/laravel-debugbar": "1.6.0"
     },
     "autoload": {
         "classmap": [
