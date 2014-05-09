@@ -47,4 +47,11 @@ class OptionsController extends \BaseController {
 
         return Redirect::back()->withSuccess('Options Updated!');
     }
+
+    public function getClearCache()
+    {
+        \File::cleanDirectory(app('http_cache.cache_dir'));
+
+        return Redirect::back()->withSuccess('Cache Cleared!');
+    }
 }

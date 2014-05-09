@@ -30,6 +30,7 @@
                         <li><a href="/admin/media/create">Create</a></li>
                     </ul>
                 </li>
+                <li>{{link_to_action('Brewski\Controllers\Admin\OptionsController@getClearCache','Clear Cache')}}</li>
                 <li class="{{( (Request::path() == 'admin/options') ? 'active' : null)}}"><a href="/admin/options">Options</a>
                 </li>
             </ul>

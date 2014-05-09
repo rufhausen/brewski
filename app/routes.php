@@ -53,6 +53,7 @@ Route::group(['prefix' => 'admin'], function ()
         Route::resource('posts', 'Brewski\Controllers\Admin\PostsController');
         Route::resource('pages', 'Brewski\Controllers\Admin\PagesController');
         Route::controller('media', 'Brewski\Controllers\Admin\MediaController');
+
     });
 });
 
