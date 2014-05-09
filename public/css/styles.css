@@ -3,6 +3,11 @@
     margin-bottom: 20px;
 }
 
+body {
+    font-family: helvetica;
+    font-size: 13px;
+}
+
 #post {
     margin-top: 5px;
     margin-bottom: 5px;
