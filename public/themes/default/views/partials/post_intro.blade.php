@@ -15,7 +15,7 @@
         </p>
         <div id="categories">
             @foreach ($post->categories as $category)
-        <span class="label ">
+        <span class="label label-primary">
             {{link_to_route('category',$category->name,[$category->slug], ['style' => 'color:white'])}}
         </span>&nbsp
             @endforeach

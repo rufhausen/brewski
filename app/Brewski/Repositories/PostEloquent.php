@@ -22,9 +22,12 @@ class PostEloquent extends BaseEloquent implements PostInterface {
 
     public function search($q)
     {
-        return Post::where('title', 'LIKE', '%' . $q . '%')
-                   ->orWhere('content', 'LIKE', '%' . $q . '%')
-                   ->get();
+        $posts = Post::published()->where(function ($query) use ($q)
+        {
+            return $query->whereRaw('title LIKE ? OR content LIKE ?', ["%$q%", "%$q%"]);
+        })->get();
+
+        return $posts;
     }
 
     public function getPublished($num = null, $order_by = 'published_at', $sort_order = 'DESC')
@@ -44,7 +47,7 @@ class PostEloquent extends BaseEloquent implements PostInterface {
     {
         $posts = Post::whereHas('categories', function ($q) use ($slug)
         {
-            $q->where('slug', $slug);
+            $q->whereRaw('slug = ?', [$slug]);
         });
         if (!empty( $per_page ))
         {

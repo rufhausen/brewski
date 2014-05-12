@@ -1,10 +1,10 @@
-<?php
+<?php namespace Brewski\Models;
+
+use Brewski\Models\Category;
 
 class Post extends \Eloquent {
 
     //protected $fillable = ['title', 'content', 'status','creator_id'];
-
-    protected $appends = ['year', 'month'];
 
     public static $rules = [
         'title'   => 'required',
@@ -20,6 +20,11 @@ class Post extends \Eloquent {
         return $query->whereStatus('published')->whereRaw('published_at <= TIMESTAMP(NOW())');
     }
 
+//    public function getRecentlyPublished($num = 5)
+//    {
+//        return self::published()->orderBy('published_at', 'DESC')->limit($num)->get();
+//    }
+
     /*
     |--------------------------------------------------------------------------
     | Mutators
@@ -33,18 +38,12 @@ class Post extends \Eloquent {
 
     public function getMonthAttribute()
     {
-        if ($this->published_at)
-        {
-            return $this->published_at->format('m');
-        }
+        return $this->published_at->format('m');
     }
 
     public function getYearAttribute()
     {
-        if ($this->published_at)
-        {
-            return $this->published_at->format('Y');
-        }
+        return $this->published_at->format('Y');
     }
 
     public function getUrlAttribute()
