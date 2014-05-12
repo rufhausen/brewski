@@ -14,6 +14,7 @@
     <meta name="description" content="@yield('meta-description')"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="alternate" type="application/rss+xml" title="{{Cache::get('options')->site_name}} RSS Feed" href="{{URL::to('feed')}}" />
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
     {{HTML::script('//code.jquery.com/jquery-1.11.0.min.js')}}
     {{HTML::style(Theme::getUrlPath(). '/css/bootstrap.min.css')}}
     {{HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')}}

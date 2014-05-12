@@ -1,6 +1,10 @@
+body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+font-family: "Ubuntu", Helvetica,Arial,sans-serif;
+}
+
 body {
-    font-family: helvetica;
-    font-size: 13px;
+    font-size: 14px;
+
 }
 
 #footer {
@@ -25,9 +29,13 @@ code {
     padding-right: 10px;
 
 }
+a {
+    color: #2c3e50;
+}
 
 h1 {
     font-size: 36px;
+
 }
 
 h2 {
