@@ -6,12 +6,13 @@
     <meta property="og:title" content="{{Cache::get('options')->site_name}}">
     <meta property="og:site_name" content="{{Cache::get('options')->site_name}}" />
     <meta property="og:url" content="{{Request::root()}}">
-    <meta property="og:description" content="@yield('meta-description')">
+    <meta property="og:description" content="@yield('meta-description', Cache::get('options')->description)">
     <meta property="twitter:url" content="{{Request::root()}}">
+    <meta property="twitter:creator" content="">
     <meta name="twitter:title" content="{{Cache::get('options')->site_name}}">
-    <meta name="twitter:description" content="@yield('meta-description')">
+    <meta name="twitter:description" content="@yield('meta-description', Cache::get('options')->description)">
     <meta name="keywords" content="{{Cache::get('options')->keywords}}"/>
-    <meta name="description" content="@yield('meta-description')"/>
+    <meta name="description" content="@yield('meta-description', Cache::get('options')->description)"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="alternate" type="application/rss+xml" title="{{Cache::get('options')->site_name}} RSS Feed" href="{{URL::to('feed')}}" />
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>

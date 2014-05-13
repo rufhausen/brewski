@@ -1,15 +1,17 @@
 <?php
 
 use Brewski\Repositories\PostInterface;
+use Brewski\Repositories\TagInterface;
 use Brewski\Repositories\CategoryInterface;
 use Illuminate\Support\Facades\Request;
 
 class HomeController extends BaseController {
 
-    public function __construct(PostInterface $post, CategoryInterface $category)
+    public function __construct(PostInterface $post, CategoryInterface $category, TagInterface $tag)
     {
         $this->post     = $post;
         $this->category = $category;
+        $this->tag      = $tag;
     }
 
     public function index()
@@ -52,6 +54,20 @@ class HomeController extends BaseController {
         }
 
         return View::make(Theme::getViewPath() . 'category', compact('posts', 'category'));
+    }
+
+    public function tag()
+    {
+        $slug  = htmlentities(Request::segment(2));
+        $posts = $this->post->getByTagSlug($slug, 5);
+        $tag   = $this->tag->getBySlug($slug)->first();
+
+        if (!$tag)
+        {
+            return App::abort(404);
+        }
+
+        return View::make(Theme::getViewPath() . 'tag', compact('posts', 'tag'));
     }
 
     public function contact()

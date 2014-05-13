@@ -10,5 +10,10 @@
     "cache_time": "0",
     "description": "",
     "theme": "default",
-    "disqus_shortname" : ""
+    "disqus_shortname" : "",
+    "facebook_url" : "",
+    "google_plus_url": "",
+    "twitter_handle":"",
+    "linked_in_url":"",
+    "rss_feed_url":""
 }

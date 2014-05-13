@@ -12,7 +12,8 @@
 */
 
 Route::group([
-    'after' => 'cache:'. ((isset(Cache::get('options')->cache_time )) ? (int) Cache::get('options')->cache_time : 0)], function ()
+    'after' => 'cache:' . ( ( isset( Cache::get('options')->cache_time ) ) ? (int) Cache::get('options')->cache_time : 0 )
+], function ()
 {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
@@ -23,37 +24,48 @@ Route::group([
 
     Route::get('category/{slug}', ['as' => 'category', 'uses' => 'HomeController@category'])
          ->where(['slug' => '^[a-zA-Z0-9-]*$']);
+
+    Route::get('tag/{slug}', ['as' => 'tag', 'uses' => 'HomeController@tag'])
+         ->where(['slug' => '^[a-zA-Z0-9-]*$']);;
 });
 
 Route::post('contact', 'HomeController@postContact');
-Route::get('search','HomeController@search');
+Route::get('search', 'HomeController@search');
 Route::controller('password', 'RemindersController');
 Route::get('sitemap', 'HomeController@getSiteMap');
 Route::get('feed', 'HomeController@getFeed');
 
 Route::get('test', function ()
 {
-    return Cache::get('options')['posts_per_page'];
+    var_dump(arrayToCommaList(Post::find(19)->tags->lists('name')));
 });
 
 Route::group(['prefix' => 'admin'], function ()
 {
-    Route::get('logout', 'Brewski\Controllers\Admin\AuthController@logout');
-    Route::post('login', 'Brewski\Controllers\Admin\AuthController@login');
+    Route::get('logout', 'AuthController@logout');
+    Route::post('login', 'AuthController@login');
 
     Route::get('login', function ()
     {
-        return View::make('Admin::login');
+        return View::make('admin.login');
     });
 
     Route::group(['before' => 'auth'], function ()
     {
-        Route::get('/', 'Brewski\Controllers\Admin\HomeController@index');
-        Route::controller('options', 'Brewski\Controllers\Admin\OptionsController');
-        Route::resource('posts', 'Brewski\Controllers\Admin\PostsController');
-        Route::resource('pages', 'Brewski\Controllers\Admin\PagesController');
-        Route::controller('media', 'Brewski\Controllers\Admin\MediaController');
+        Route::get('/', 'Admin_HomeController@index');
+        Route::controller('options', 'OptionsController');
+        Route::resource('posts', 'PostsController');
+        Route::resource('pages', 'PagesController');
+        Route::controller('media', 'MediaController');
 
+    });
+
+    Route::group(['prefix' => 'api'], function ()
+    {
+        Route::get('tags', function ()
+        {
+            return Tag::lists('name');
+        });
     });
 });
 

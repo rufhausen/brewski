@@ -10,12 +10,14 @@ at [http://thereluctantdeveloper.com](http://thereluctantdeveloper.com).
 - Basic Disqus integration
 - Responsive Admin (bootstrap)
 - Markdown-based editor
+- Categories & Tags
+- Basic Search
 
 ####TODO
-- Caching
-- Tags
+- ~~Caching~~
+- ~~Tags~~
 - Page Creation
-- Search
+- ~~Search~~
 - Unit Tests
 - Lots of code cleanup/refactoring
 

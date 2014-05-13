@@ -83,4 +83,8 @@ class Post extends \Eloquent {
         return $this->belongsToMany('Category');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany('Tag');
+    }
 }

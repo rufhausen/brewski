@@ -33,9 +33,29 @@ function getCmsVersion()
     {
         $version = File::get($version_file);
 
-        if(strstr($version, '-'))
-            $version = strstr($version,'-',true);
+        if (strstr($version, '-'))
+        {
+            $version = strstr($version, '-', true);
+        }
 
         return $version;
+    }
+}
+
+function commaListToArray($list)
+{
+    $list = trim(rtrim($list, ','));
+    if (!empty( $list ))
+    {
+        return array_map('trim', explode(',', $list));
+    }
+}
+
+
+function arrayToCommaList($arr)
+{
+    if (!empty( $arr ))
+    {
+        return implode(',', $arr);
     }
 }

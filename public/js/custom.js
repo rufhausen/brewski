@@ -1,5 +1,8 @@
 $(function () {
 
+
+$('input[name="tags-input"]').tagsinput();
+
     $('#basic a').click(function (e) {
         e.preventDefault()
         $(this).tab('show')

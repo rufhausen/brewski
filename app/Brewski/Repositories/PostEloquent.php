@@ -2,6 +2,7 @@
 
 use Post;
 use Category;
+use Tag;
 use DB;
 use Input;
 use Auth;
@@ -41,6 +42,23 @@ class PostEloquent extends BaseEloquent implements PostInterface {
 
         return $posts->get();
 
+    }
+
+    public function getByTagSlug($slug, $per_page = null)
+    {
+        $posts = Post::whereHas('tags', function ($q) use ($slug)
+        {
+            $q->whereRaw('slug = ?', [$slug]);
+        });
+        if (!empty( $per_page ))
+        {
+            $posts = $posts->paginate(5);
+        } else
+        {
+            $posts = $posts->get();
+        }
+
+        return $posts;
     }
 
     public function getByCategorySlug($slug, $per_page = null)
@@ -121,6 +139,7 @@ class PostEloquent extends BaseEloquent implements PostInterface {
 
 
                 $this->setCategories($post, Input::get('category_id'), Input::get('new_category'));
+                $this->setTags($post, Input::get('tags'));
 
                 \File::cleanDirectory(app('http_cache.cache_dir'));
 
@@ -128,50 +147,6 @@ class PostEloquent extends BaseEloquent implements PostInterface {
         }
 
         return $this->new_post;
-    }
-
-    public function setSlug($post)
-    {
-        $current_slugs = Post::whereSlug(Str::slug($post->title))->get();
-        if ($current_slugs->count())
-        {
-            return Str::slug($post->title . '-' . $post->id);
-        }
-
-        return Str::slug($post->title);
-    }
-
-    public function setCategories($post, $category_ids = null, $new_category = null)
-    {
-        $post->categories()->detach();
-
-        if (isset( $new_category ) and ( !empty( $new_category ) ))
-        {
-            $current_category = Category::whereSlug(Str::slug($new_category))->first();
-
-            if (!$current_category)
-            {
-                $new_category = Category::create([
-                    'name' => $new_category,
-                    'slug' => Str::slug($new_category)
-                ]);
-                $add_cat_id   = $new_category->id;
-
-            } else
-            {
-                $add_cat_id = $current_category->id;
-            }
-            if (is_null($category_ids))
-            {
-                $category_ids = [];
-            }
-            array_push($category_ids, $add_cat_id);
-        }
-
-        if (isset( $category_ids ))
-        {
-            $post->categories()->attach($category_ids);
-        }
     }
 
     public function update($id)
@@ -207,9 +182,85 @@ class PostEloquent extends BaseEloquent implements PostInterface {
                 $post->slug = $this->setSlug($post);
 
                 $this->setCategories($post, Input::get('category_id'), Input::get('new_category'));
+                $this->setTags($post, commaListToArray(Input::get('tags')));
 
                 \File::cleanDirectory(app('http_cache.cache_dir'));
             });
+        }
+    }
+
+    public function setSlug($post)
+    {
+        $current_slugs = Post::whereSlug(Str::slug($post->title))->get();
+        if ($current_slugs->count())
+        {
+            return Str::slug($post->title . '-' . $post->id);
+        }
+
+        return Str::slug($post->title);
+    }
+
+    public function setTags($post, $tags = null)
+    {
+        $post->tags()->detach();
+
+        if (isset( $tags ) and ( !empty( $tags ) ))
+        {
+            $post_tags = [];
+            foreach ( $tags as $key => $value )
+            {
+                $current_tag = Tag::whereSlug(Str::slug($value))->first();
+
+                if (!$current_tag)
+                {
+                    $new_tag    = Tag::create([
+                        'name' => $value,
+                        'slug' => Str::slug($value)
+                    ]);
+                    $add_tag_id = $new_tag->id;
+
+
+                } else
+                {
+                    $add_tag_id = $current_tag->id;
+                }
+                array_push($post_tags, $add_tag_id);
+            }
+        }
+
+        $post->tags()->attach($post_tags);
+    }
+
+    public function setCategories($post, $category_ids = null, $new_category = null)
+    {
+        $post->categories()->detach();
+
+        if (isset( $new_category ) and ( !empty( $new_category ) ))
+        {
+            $current_category = Category::whereSlug(Str::slug($new_category))->first();
+
+            if (!$current_category)
+            {
+                $new_category = Category::create([
+                    'name' => $new_category,
+                    'slug' => Str::slug($new_category)
+                ]);
+                $add_cat_id   = $new_category->id;
+
+            } else
+            {
+                $add_cat_id = $current_category->id;
+            }
+            if (is_null($category_ids))
+            {
+                $category_ids = [];
+            }
+            array_push($category_ids, $add_cat_id);
+        }
+
+        if (isset( $category_ids ))
+        {
+            $post->categories()->attach($category_ids);
         }
     }
 

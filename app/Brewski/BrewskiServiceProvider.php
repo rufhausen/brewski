@@ -23,6 +23,11 @@ class BrewskiServiceProvider extends ServiceProvider {
         );
 
         $this->app->bind(
+            'Brewski\Repositories\TagInterface',
+            'Brewski\Repositories\TagEloquent'
+        );
+
+        $this->app->bind(
             'Brewski\Repositories\MediaInterface',
             'Brewski\Repositories\MediaEloquent'
         );
@@ -34,14 +39,11 @@ class BrewskiServiceProvider extends ServiceProvider {
 
         //Custom Locations & Namespaces
         View::addLocation(public_path() . '/themes/');
-        View::addLocation(app_path() . '/Brewski/Views');
-        View::addLocation(app_path() . '/Brewski/Views/Shared');
-        View::addNamespace('Shared', app_path() . '/Brewski/Views/Shared');
-        View::addNamespace('Admin', app_path() . '/Brewski/Views');
+        View::addNamespace('Shared', app_path() . '/views/shared/');
         View::addNamespace('Themes', public_path() . '/themes/');
 
         //View Composers
-        View::composer(['/', 'Admin::posts.create', 'Admin::posts.edit'], 'Brewski\Composers\CategoryList');
+        View::composer(['/', 'admin.posts.create', 'admin.posts.edit'], 'Brewski\Composers\CategoryList');
         View::composer('*.layouts.*', 'Brewski\Composers\RecentPosts');
         View::composer('*.layouts.*', 'Brewski\Composers\PopularCategories');
 
