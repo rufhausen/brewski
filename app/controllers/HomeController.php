@@ -172,6 +172,13 @@ class HomeController extends BaseController {
             $sitemap->add(Request::root() . '/category/' . $category->slug, $category->updated_at, '1.0', 'daily', null, htmlspecialchars($category->name));
         }
 
+        $tags = $this->tag->all();
+
+        foreach ( $tags as $tag )
+        {
+            $sitemap->add(Request::root() . '/tag/' . $tag->slug, $tag->updated_at, '1.0', 'daily', null, htmlspecialchars($tag->name));
+        }
+
         // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
         return $sitemap->render('xml');
     }
