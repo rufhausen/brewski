@@ -1,0 +1,26 @@
+{
+  "name": "Brewski",
+  "version": "2.0.0",
+  "authors": [
+    "Gary Taylor <gtaylor@electricwerks.com>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "fontawesome": "~4.3.0",
+    "selectize": "~0.12.1",
+    "moment": "~2.10.3",
+    "eonasdan-bootstrap-datetimepicker": "~4.7.14",
+    "ckeditor": "~4.4.7"
+  }
+}
