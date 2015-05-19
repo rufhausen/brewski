@@ -26,7 +26,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('/', 'HomeController@getIndex');
         Route::get('auth/logout', 'Auth\AuthController@getLogout');
         Route::resource('posts', 'PostsController', ['except' => 'show']);
-        Route::resource('users', 'Userscontroller', ['except' => 'show']);
+        Route::resource('users', 'UsersController', ['except' => 'show']);
         Route::controller('settings', 'SettingsController');
         Route::get('clear-cache', 'CacheController@getClear');
     });
