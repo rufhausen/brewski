@@ -127,7 +127,6 @@ class Post extends Model
 
     public function store($request)
     {
-        dd($request->all());
 
         DB::transaction(function () use ($request) {
             $post = new Post;
