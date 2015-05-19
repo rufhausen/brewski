@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+s<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -41,6 +41,7 @@
           <li class="{{ active_route('posts', 2) }}"><a href="/admin/posts">Posts <span class="sr-only">(current)</span></a></li>
           <li class="{{ active_route('users', 2) }}"><a href="/admin/users">Users <span class="sr-only">(current)</span></a></li>
           <li class="{{ active_route('settings', 2) }}"><a href="/admin/settings">Settings <span class="sr-only">(current)</span></a></li>
+          <li class=""><a href="/admin/clear-cache"><span style="color: #F3D867">Clear Cache</span> <span class="sr-only">(current)</span></a></li>
           <!-- <li><a href="#">Link</a></li> -->
               <!--             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -51,7 +52,7 @@
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>
                 <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><a href="#">One more separated link</a></li>å
               </ul>
             </li> -->
           </ul>
@@ -64,8 +65,8 @@
       </div><!-- /.container-fluid -->
     </nav>
     <div class="content" style="margin-top: 80px;">
-      @include('admin.partials.messages')
       <div class="container">
+        @include('admin.partials.messages')
         @yield('content')
       </div>
     </div>

@@ -11,14 +11,12 @@
 |
  */
 
-Route::get('test', function () {
-
-});
-
 Route::get('/', 'HomeController@getIndex');
 Route::get('search', ['as' => 'search', 'uses' => 'HomeController@getSearch']);
 Route::get('contact', 'HomeController@getContact');
 Route::post('contact', ['as' => 'post_contact', 'uses' => 'HomeController@postContact']);
+Route::get('feed', ['as' => 'feed', 'uses' => 'HomeController@getFeed']);
+Route::get('sitemap', 'HomeController@getSiteMap');
 
 Route::get('{year}/{month}/{slug}', ['as' => 'post', 'uses' => 'HomeController@getPost'])
     ->where(['year' => '[0-9]+', 'month' => '[0-9]+', 'slug' => '^[a-zA-Z0-9-]*$']);
@@ -41,6 +39,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::resource('posts', 'PostsController', ['except' => 'show']);
         Route::resource('users', 'Userscontroller', ['except' => 'show']);
         Route::controller('settings', 'SettingsController');
+        Route::get('clear-cache', 'CacheController@getClear');
     });
 
 });
