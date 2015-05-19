@@ -7,6 +7,7 @@ use App\Tag;
 use Illuminate\Contracts\View\View as View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App as App;
+use Illuminate\Support\Facades\URL as URL;
 use Symfony\Component\Console\Input\Input as Input;
 
 class HomeController extends Controller
@@ -95,6 +96,63 @@ class HomeController extends Controller
         }
 
         return view('home.tag', compact('posts', 'tag'));
+    }
+
+    public function getFeed()
+    {
+        // creating rss feed with our most recent 20 posts
+        $posts = $this->post->getAll('published', null, 'published_at', 'desc', 20); //$paginate = null, $sort_by = 'created_at', $order = 'desc', $limit = null
+
+        $feed = \Feed::make();
+
+        // set your feed's title, description, link, pubdate and language
+        $feed->title       = \Cache::get('settings')['site_name'];
+        $feed->description = \Cache::get('settings')['meta_description'];
+        $feed->logo        = '';
+        $feed->link        = link_to('feed');
+        $feed->pubdate     = $posts{0}->published_at;
+        $feed->lang        = 'en';
+
+        foreach ($posts as $post) {
+            // set item's title, author, url, pubdate, description and content
+            $feed->add($post->title, $post->creator->full_name, link_to($post->url), $post->published_at, htmlentities($post->intro), htmlentities($post->content));
+        }
+
+        return $feed->render('atom', 60);
+    }
+
+    public function getSiteMap()
+    {
+        // create new sitemap object
+        $sitemap = App::make("sitemap");
+
+        // set cache (key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean))
+        // by default cache is disabled
+        $sitemap->setCache('laravel.sitemap', 3600);
+
+        // add item to the sitemap (url, date, priority, freq)
+        $sitemap->add(link_to('contact'), date('Y-m-d') . 'T12:30:00+02:00', '0.5', 'monthly');
+        // get all posts from db
+        $posts = $this->post->getAll('published');
+
+        foreach ($posts as $post) {
+            $sitemap->add($post->url, $post->updated_at, '1.0', 'daily', null, htmlspecialchars($post->title));
+        }
+
+        $categories = $this->category->all();
+
+        foreach ($categories as $category) {
+            $sitemap->add($this->request->root() . '/category/' . $category->slug, $category->updated_at, '1.0', 'daily', null, htmlspecialchars($category->name));
+        }
+
+        $tags = $this->tag->all();
+
+        foreach ($tags as $tag) {
+            $sitemap->add($this->request->root() . '/tag/' . $tag->slug, $tag->updated_at, '1.0', 'daily', null, htmlspecialchars($tag->name));
+        }
+
+        // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
+        return $sitemap->render('xml');
     }
 
     public function getContact()
