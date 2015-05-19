@@ -138,6 +138,8 @@ return [
         'Illuminate\View\ViewServiceProvider',
         'Collective\Html\HtmlServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
+        'Roumen\Feed\FeedServiceProvider',
+        'Roumen\Sitemap\SitemapServiceProvider',
 
         /*
          * Application Service Providers...
@@ -197,6 +199,7 @@ return [
         'Form'      => 'Collective\Html\FormFacade',
         'Html'      => 'Collective\Html\HtmlFacade',
         'Debugbar'  => 'Barryvdh\Debugbar\Facade',
+        'Feed'      => 'Roumen\Feed\Facades\Feed',
 
     ],
 
