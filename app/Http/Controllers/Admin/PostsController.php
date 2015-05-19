@@ -49,22 +49,6 @@ class PostsController extends Controller
     {
         $this->post->store($request);
 
-        // $status = ($request->input('status') == 'published' ? 'published' : 'draft'); //not ready
-
-        // $post = $this->post->create(
-        //     [
-        //         'title'          => $request->input('title'),
-        //         'content'        => $request->input('content'),
-        //         'status'         => $status,
-        //         'allow_comments' => $request->allow_comments,
-        //     ]);
-
-        // $post->slug = $this->post->makeSlug($post);
-        // $post->save();
-
-        // $this->post->setCategories($post, $request->input('category_id'), $request->input('new_category'));
-        // $this->post->setTags($post, commaListToArray($request->input('tags')));
-
         return redirect('/admin/posts')->withSuccess('Post was created');
     }
 
@@ -93,22 +77,7 @@ class PostsController extends Controller
 
         $this->post->doUpdate($id, $request);
 
-        // $status = ($request->input('status') == 'published' ? 'published' : 'draft');
-
-        // $post                 = $this->post->find($id);
-        // $post->title          = $request->input('title');
-        // $post->content        = $request->input('content');
-        // $post->status         = $status;
-        // $post->allow_comments = $request->allow_comments;
-        // $post->save();
-
-        // $this->post->setCategories($post, $request->input('category_id'), $request->input('new_category'));
-        // $this->post->setTags($post, commaListToArray($request->input('tags')));
-
-        // $post->slug = $this->post->makeSlug($post);
-        // $post->save();
-
-        return redirect('admin/posts/' . $id . '/edit');
+        return redirect('admin/posts/' . $id . '/edit')->withSuccess('Post Updated!');
     }
 
     /**
