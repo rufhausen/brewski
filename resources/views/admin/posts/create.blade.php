@@ -7,7 +7,7 @@
         {!!Form::label('title','Post Title')!!}
         {!!Form::text('title', null, ['class' => 'form-control'])!!}
         {!!Form::label('content','Content')!!}
-        {!!Form::textarea('content', null, ['class' => 'form-control summernote','rows' => '25'])!!}
+        {!!Form::textarea('content', null, ['class' => 'form-control','rows' => '25'])!!}
     </div>
     <div class="col-md-3">
         {!!Form::button('Cancel',['class' => 'btn btn-default btn-block', 'data-toggle' => 'modal','data-target' =>
@@ -84,6 +84,7 @@ aria-hidden="true">
 </div>
 </div>
 <script>
-    $('.summernote').summernote();
+    CKEDITOR.replace( 'content' );
+    $('#datetimepicker1').datetimepicker();
 </script>
 @stop
