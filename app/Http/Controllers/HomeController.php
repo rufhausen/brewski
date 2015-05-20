@@ -1,12 +1,10 @@
 <?php namespace App\Http\Controllers;
 
 use App\Category;
-//use Illuminate\Validation\Validator as Validator;
-//use Illuminate\Support\Facades\Validator as Validator;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactRequest;
 use App\Post as Post;
 use App\Tag;
-use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Contracts\View\View as View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App as App;
@@ -166,36 +164,17 @@ class HomeController extends Controller
         return view('home.contact');
     }
 
-    public function postContact()
+    public function postContact(ContactRequest $request)
     {
+        $data = $request->all();
 
-        $rules = array(
-            'name'    => 'required|max:200',
-            'email'   => 'required|email',
-            'content' => 'required|max: 1000',
-
-        );
-
-        if (Cache::get('options')->recaptcha_enabled) {
-            $recaptcha_rule = ['recaptcha_response_field' => 'required|recaptcha'];
-            $rules          = array_merge($rules, $recaptcha_rule);
-        }
-
-        $validation = Validator::make(Input::all(), $rules);
-
-        if ($validation->fails()) {
-            return Redirect::back()->withErrors($validation)->withInput();
-        }
-
-        $data = Input::all();
-
-        Mail::send(Theme::getViewPath() . 'email.contact', $data, function ($message) {
+        Mail::send('emails.contact', $data, function ($message) use ($request) {
             $message
-            ->from(Input::get('email'), Input::get('name'))
-            ->to(Cache::get('options')->admin_email)
-            ->subject(Cache::get('options')->site_name . ' Contact Form Message');
+            ->from($request->input('email'), $request->input('name'))
+            ->to(Cache::get('settings')['admin_email'])
+            ->subject(Cache::get('settings')['site_name'] . ' Contact Form Message');
         });
 
-        return Redirect::to('contact')->with('success', 'You message has been sent! We\'ll be in touch soon.');
+        return redirect()->to('contact')->with('success', 'You message has been sent! We\'ll be in touch soon.');
     }
 }

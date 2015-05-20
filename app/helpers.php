@@ -48,3 +48,8 @@ function showMoreLink($post)
             ));
     }
 }
+
+function formatMailMessage($message)
+{
+    return nl2br($message);
+}
