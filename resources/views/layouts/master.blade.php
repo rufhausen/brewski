@@ -41,6 +41,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-9">
+              @include('partials.messages')
               @yield('content')
             </div>
             <div class="col-md-3">
