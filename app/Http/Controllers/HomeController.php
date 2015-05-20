@@ -1,12 +1,18 @@
 <?php namespace App\Http\Controllers;
 
 use App\Category;
+//use Illuminate\Validation\Validator as Validator;
+//use Illuminate\Support\Facades\Validator as Validator;
 use App\Http\Controllers\Controller;
 use App\Post as Post;
 use App\Tag;
+use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Contracts\View\View as View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App as App;
+use Illuminate\Support\Facades\Cache as Cache;
+use Illuminate\Support\Facades\Mail as Mail;
+use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\URL as URL;
 use Symfony\Component\Console\Input\Input as Input;
 
@@ -163,5 +169,33 @@ class HomeController extends Controller
     public function postContact()
     {
 
+        $rules = array(
+            'name'    => 'required|max:200',
+            'email'   => 'required|email',
+            'content' => 'required|max: 1000',
+
+        );
+
+        if (Cache::get('options')->recaptcha_enabled) {
+            $recaptcha_rule = ['recaptcha_response_field' => 'required|recaptcha'];
+            $rules          = array_merge($rules, $recaptcha_rule);
+        }
+
+        $validation = Validator::make(Input::all(), $rules);
+
+        if ($validation->fails()) {
+            return Redirect::back()->withErrors($validation)->withInput();
+        }
+
+        $data = Input::all();
+
+        Mail::send(Theme::getViewPath() . 'email.contact', $data, function ($message) {
+            $message
+            ->from(Input::get('email'), Input::get('name'))
+            ->to(Cache::get('options')->admin_email)
+            ->subject(Cache::get('options')->site_name . ' Contact Form Message');
+        });
+
+        return Redirect::to('contact')->with('success', 'You message has been sent! We\'ll be in touch soon.');
     }
 }

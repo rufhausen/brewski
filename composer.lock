@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e96ff47d88a950567d2a1e7953712d24",
+    "hash": "97508ef506e5ed8a3f3438ed65a7bf19",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -326,34 +326,34 @@
         },
         {
             "name": "greggilbert/recaptcha",
-            "version": "1.0.7",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/greggilbert/recaptcha.git",
-                "reference": "677cd306027d29327dde5b6b9d58e9adc3e14f35"
+                "reference": "828b9fdeee3c3b15ea1ce148d2871adaaeca26d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/greggilbert/recaptcha/zipball/677cd306027d29327dde5b6b9d58e9adc3e14f35",
-                "reference": "677cd306027d29327dde5b6b9d58e9adc3e14f35",
+                "url": "https://api.github.com/repos/greggilbert/recaptcha/zipball/828b9fdeee3c3b15ea1ce148d2871adaaeca26d3",
+                "reference": "828b9fdeee3c3b15ea1ce148d2871adaaeca26d3",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "*",
+                "illuminate/support": "~5.0",
                 "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
                 "classmap": [
                     "src/migrations"
                 ],
-                "psr-0": {
-                    "Greggilbert\\Recaptcha": "src/"
+                "psr-4": {
+                    "Greggilbert\\Recaptcha\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -366,15 +366,15 @@
                     "email": "greg@greg-gilbert.com"
                 }
             ],
-            "description": "reCAPTCHA Validator for Laravel 4",
+            "description": "reCAPTCHA Validator for Laravel 5",
             "homepage": "http://github.com/greggilbert/recaptcha",
             "keywords": [
                 "captcha",
                 "laravel",
-                "laravel4",
+                "laravel5",
                 "recaptcha"
             ],
-            "time": "2014-03-04 04:12:02"
+            "time": "2015-05-11 14:16:01"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -3457,6 +3457,7 @@
     "stability-flags": {
         "barryvdh/laravel-debugbar": 20,
         "laravelcollective/html": 20,
+        "greggilbert/recaptcha": 20,
         "roumen/feed": 20,
         "roumen/sitemap": 20,
         "laracasts/generators": 20

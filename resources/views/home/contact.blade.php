@@ -22,11 +22,13 @@
                 {!!Form::textarea('content',null,['rows' => '15','class' => 'form-control','placeholder' => 'Message'])!!}
             </div>
         </div>
+        @if(Cache::get('settings')['enable_recaptcha'] == 1)
         <div class="row">
             <div class="form-group col-md-12">
-
+                {!!Recaptcha::render()!!}
             </div>
         </div>
+        @endif
         {!!Form::submit('Send Message', ['class' => 'btn btn-primary'])!!}
         {!!Form::close()!!}
     </div>
