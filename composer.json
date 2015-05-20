@@ -8,7 +8,7 @@
 		"laravel/framework": "5.1.*",
 		"barryvdh/laravel-debugbar": "^2.0@dev",
 		"laravelcollective/html": "dev-master",
-        "greggilbert/recaptcha": "1.0.7",
+        "greggilbert/recaptcha": "^2.0@dev",
 		"roumen/feed": "^2.9@dev",
 		"roumen/sitemap": "^2.5@dev"
 	},

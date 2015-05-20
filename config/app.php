@@ -140,6 +140,7 @@ return [
         'Barryvdh\Debugbar\ServiceProvider',
         'Roumen\Feed\FeedServiceProvider',
         'Roumen\Sitemap\SitemapServiceProvider',
+        'Greggilbert\Recaptcha\RecaptchaServiceProvider',
 
         /*
          * Application Service Providers...
@@ -200,6 +201,7 @@ return [
         'Html'      => 'Collective\Html\HtmlFacade',
         'Debugbar'  => 'Barryvdh\Debugbar\Facade',
         'Feed'      => 'Roumen\Feed\Facades\Feed',
+        'Recaptcha' => 'Greggilbert\Recaptcha\Facades\Recaptcha',
 
     ],
 
