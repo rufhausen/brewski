@@ -6,6 +6,10 @@
     {{$name}}
 </p>
 <p>
+    <h4>Email</h4>
+    {{$email}}
+</p>
+<p>
     <h4>Messsage</h4>
     {{$content}}
 </p>

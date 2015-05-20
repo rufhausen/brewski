@@ -1,13 +1,10 @@
 <?php namespace App\Http\Controllers;
 
 use App\Category;
-//use Illuminate\Validation\Validator as Validator;
-//use Illuminate\Support\Facades\Validator as Validator;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactRequest;
 use App\Post as Post;
 use App\Tag;
-use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Contracts\View\View as View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App as App;
