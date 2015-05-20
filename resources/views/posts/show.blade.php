@@ -8,6 +8,7 @@
         @include('partials.post_share_list')
         @include('partials.post_tag_list')
         <p>{!! $post->content !!}</p>
+        @include('partials.post_disqus')
     </div>
 </div>
 @endsection

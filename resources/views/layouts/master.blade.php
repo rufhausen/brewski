@@ -51,5 +51,6 @@
         @include('partials.footer')
       </div>
     </div>
+    @include('partials.ga')
   </body>
   </html>
