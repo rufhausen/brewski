@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Request;
 
 function commaListToArray($list)
@@ -9,13 +8,6 @@ function commaListToArray($list)
     $list = explode(',', $list);
     if (!empty($list)) {
         return array_map('trim', $list);
-    }
-}
-
-function settings($item)
-{
-    if (Cache::has('settings')) {
-        return Cache::get('settings')[$item];
     }
 }
 

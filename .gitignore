@@ -1,5 +1,8 @@
-/vendor
 /node_modules
-.env
+
+/vendor
+oracle.sqlite
 .DS_Store
 */.DS_Store
+tests/_output/*
+.env
