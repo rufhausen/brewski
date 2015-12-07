@@ -5,10 +5,9 @@
 	"license": "MIT",
 	"type": "project",
 	"require": {
-		"laravel/framework": "5.*",
-		"barryvdh/laravel-debugbar": "^2.0@dev",
-		"laravelcollective/html": "dev-master",
-        "greggilbert/recaptcha": "^2.0@dev",
+		"laravel/framework": "5.1.x",
+	    "laravelcollective/html": "5.1.*",
+	    "greggilbert/recaptcha": "dev-master",
 		"roumen/feed": "^2.9@dev",
 		"roumen/sitemap": "^2.5@dev"
 	},

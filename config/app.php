@@ -137,7 +137,6 @@ return [
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
         'Collective\Html\HtmlServiceProvider',
-        'Barryvdh\Debugbar\ServiceProvider',
         'Roumen\Feed\FeedServiceProvider',
         'Roumen\Sitemap\SitemapServiceProvider',
         'Greggilbert\Recaptcha\RecaptchaServiceProvider',
