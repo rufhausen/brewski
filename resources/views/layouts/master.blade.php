@@ -8,13 +8,13 @@
   <meta property="og:title" content="{{ settings('site_name') }}">
   <meta property="og:site_name" content="{{ settings('site_name') }}" />
   <meta property="og:url" content="\{{ Request::root() }}">
-  <meta property="og:description" content="{{ settings('meta_description')}}">
+  <meta property="og:description" content="{{ ( !Request::is('/') ? settings('site_name') . ' - ' . $post->title : settings('meta_description'))}}">
   <meta property="twitter:url" content="{{ \Request::root() }}">
   <meta property="twitter:creator" content="{{ settings('twitter_handle') }}">
-  <meta name="twitter:title" content="{{ settings('site_name') }}">
+  <meta name="twitter:title" content="{{ ( !Request::is('/') ? settings('site_name') . ' - ' . $post->title : settings('meta_description'))}}">
   <meta name="twitter:description" content="{{ settings('meta_description') }}">
   <meta name="keywords" content="{{ settings('meta_keywords') }}"/>
-  <meta name="description" content="{{ settings('meta_description') }}"/>
+  <meta name="description" content="{{ ( !Request::is('/') ? settings('site_name') . ' - ' . $post->title : settings('meta_description'))}}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="alternate" type="application/rss+xml" title="{{ settings('site_name') }} RSS Feed" href="{{ settings('rss_feed_url') }}" />
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
