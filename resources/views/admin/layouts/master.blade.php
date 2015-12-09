@@ -38,7 +38,14 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="{{ active_route('posts', 2) }}"><a href="/admin/posts">Posts <span class="sr-only">(current)</span></a></li>
+          <!-- <li class="{{ active_route('posts', 2) }}"><a href="/admin/posts">Posts <span class="sr-only">(current)</span></a></li> -->
+          <li class="{{ active_route('posts', 2) }} dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Posts <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/admin/posts">List</a></li>
+                <li><a href="/admin/posts/create">Create</a></li>
+              </ul>
+            </li>
           <li class="{{ active_route('users', 2) }}"><a href="/admin/users">Users <span class="sr-only">(current)</span></a></li>
           <li class="{{ active_route('settings', 2) }}"><a href="/admin/settings">Settings <span class="sr-only">(current)</span></a></li>
           <li class=""><a href="/admin/clear-cache"><span style="color: #F3D867">Clear Cache</span> <span class="sr-only">(current)</span></a></li>
