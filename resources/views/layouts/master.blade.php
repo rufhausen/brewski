@@ -8,7 +8,7 @@
   <meta property="og:title" content="{{ settings('site_name') }}">
   <meta property="og:site_name" content="{{ settings('site_name') }}" />
   <meta property="og:url" content="\{{ Request::root() }}">
-  <meta property="og:description" content="{{ $meta }}">
+  <meta property="og:description" content="{{ (isset($post) ? settings('site_name') . ' - ' . $post->title : settings('meta_description')) }}">
   <meta property="twitter:url" content="{{ \Request::root() }}">
   <meta property="twitter:creator" content="{{ settings('twitter_handle') }}">
   <meta name="twitter:title" content="{{ (isset($post) ? settings('site_name') . ' - ' . $post->title : settings('meta_description')) }}">
