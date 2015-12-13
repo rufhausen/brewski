@@ -15,7 +15,6 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer('*', 'App\Http\ViewComposers\CategoriesComposer');
         View::composer('*', 'App\Http\ViewComposers\PopularCategoriesComposer');
         View::composer('*', 'App\Http\ViewComposers\RecentPostsComposer');
-        View::composer('*', 'App\Http\ViewComposers\MetaComposer');
     }
 
     /**
