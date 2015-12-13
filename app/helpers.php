@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Request;
 
+/**
+ * @param $list
+ */
 function commaListToArray($list)
 {
     $list = trim(rtrim($list, ','));
@@ -12,6 +15,9 @@ function commaListToArray($list)
     }
 }
 
+/**
+ * @param $item
+ */
 function settings($item)
 {
     if (Cache::has('settings')) {
@@ -19,6 +25,9 @@ function settings($item)
     }
 }
 
+/**
+ * @param $arr
+ */
 function arrayToCommaList($arr)
 {
 
@@ -27,6 +36,10 @@ function arrayToCommaList($arr)
     }
 }
 
+/**
+ * @param $route
+ * @param null     $segment
+ */
 function active_route($route = null, $segment = 1)
 {
     if (Request::segment($segment) == $route) {
@@ -34,6 +47,9 @@ function active_route($route = null, $segment = 1)
     }
 }
 
+/**
+ * @param $post
+ */
 function showMoreLink($post)
 {
     if (
@@ -49,6 +65,9 @@ function showMoreLink($post)
     }
 }
 
+/**
+ * @param $message
+ */
 function formatMailMessage($message)
 {
     return nl2br($message);

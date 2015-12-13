@@ -36,6 +36,7 @@ class HomeController extends Controller
         $this->category = $category;
         $this->tag      = $tag;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,16 +56,17 @@ class HomeController extends Controller
         return view('home.search', compact('q', 'posts'));
     }
 
+    /**
+     * @param $slug
+     */
     public function getPost($slug)
     {
 
         $slug = htmlentities($this->request->segment(3));
         $post = $this->post->getBySlug($slug);
-
         if (!$post) {
             return App::abort(404);
         }
-
         return view('posts.show', compact('post'));
     }
 
@@ -102,6 +104,9 @@ class HomeController extends Controller
         return view('home.tag', compact('posts', 'tag'));
     }
 
+    /**
+     * @return mixed
+     */
     public function getFeed()
     {
         // creating rss feed with our most recent 20 posts
@@ -125,6 +130,9 @@ class HomeController extends Controller
         return $feed->render('atom', 60);
     }
 
+    /**
+     * @return mixed
+     */
     public function getSiteMap()
     {
         // create new sitemap object
@@ -164,6 +172,9 @@ class HomeController extends Controller
         return view('home.contact');
     }
 
+    /**
+     * @param ContactRequest $request
+     */
     public function postContact(ContactRequest $request)
     {
         $data = $request->all();
