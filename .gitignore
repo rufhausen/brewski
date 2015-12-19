@@ -7,3 +7,8 @@
 tags
 =======
 >>>>>>> b4cd92de1fb592718d98b6352d58d1d67c4b61ff
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
