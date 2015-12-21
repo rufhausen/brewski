@@ -3,10 +3,8 @@
 .env
 .DS_Store
 */.DS_Store
-<<<<<<< HEAD
 tags
-=======
->>>>>>> b4cd92de1fb592718d98b6352d58d1d67c4b61ff
+.idea
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
