@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-6">
             <span class="pull-right">
-                Laravel Ver. {{app()->version()}} | 
+                Laravel Ver. {{app()->version()}} |
                 Powered By <a href="https://github.com/rufhausen/brewski" target="_blank">Brewski</a>
             </span>
         </div>
