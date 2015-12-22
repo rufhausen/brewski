@@ -13,7 +13,8 @@ return [
     |
      */
 
-    'debug'           => env('APP_DEBUG'),
+    'debug' => env('APP_DEBUG'),
+    'env'   => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ return [
     |
      */
 
-    'url'             => 'http://localhost',
+    'url' => 'http://localhost',
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ return [
     |
      */
 
-    'timezone'        => 'America/Denver',
+    'timezone' => 'America/Denver',
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +53,7 @@ return [
     |
      */
 
-    'locale'          => 'en',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -78,9 +79,9 @@ return [
     |
      */
 
-    'key'             => env('APP_KEY', 'SomeRandomString'),
+    'key' => env('APP_KEY', 'SomeRandomString'),
 
-    'cipher'          => MCRYPT_RIJNDAEL_128,
+    'cipher' => MCRYPT_RIJNDAEL_128,
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +96,7 @@ return [
     |
      */
 
-    'log'             => 'single',
+    'log' => 'single',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,18 +109,16 @@ return [
     |
      */
 
-    'providers'       => [
+    'providers' => [
 
         /*
          * Laravel Framework Service Providers...
          */
-        'Illuminate\Foundation\Providers\ArtisanServiceProvider',
         'Illuminate\Auth\AuthServiceProvider',
         'Illuminate\Broadcasting\BroadcastServiceProvider',
         'Illuminate\Bus\BusServiceProvider',
         'Illuminate\Cache\CacheServiceProvider',
         'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
-        'Illuminate\Routing\ControllerServiceProvider',
         'Illuminate\Cookie\CookieServiceProvider',
         'Illuminate\Database\DatabaseServiceProvider',
         'Illuminate\Encryption\EncryptionServiceProvider',
@@ -162,7 +161,7 @@ return [
     |
      */
 
-    'aliases'         => [
+    'aliases' => [
 
         'App'       => 'Illuminate\Support\Facades\App',
         'Artisan'   => 'Illuminate\Support\Facades\Artisan',

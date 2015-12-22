@@ -1,5 +1,11 @@
 <?php
 
+if (app()->environment() == 'local') {
+    Route::get('test', function () {
+        putenv("LARAVEL_VERSION=" . app()->version());
+        phpinfo();
+    });
+}
 Route::get('/', 'HomeController@getIndex');
 Route::get('search', ['as' => 'search', 'uses' => 'HomeController@getSearch']);
 Route::get('contact', 'HomeController@getContact');
