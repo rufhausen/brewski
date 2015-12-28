@@ -24,10 +24,11 @@ class HomeController extends Controller
 
     /**
      * [__construct description]
-     * @param Request  $request  [description]
-     * @param Post     $post     [description]
+     *
+     * @param Request $request [description]
+     * @param Post $post [description]
      * @param Category $category [description]
-     * @param Tag      $tag      [description]
+     * @param Tag $tag [description]
      */
     public function __construct(Request $request, Post $post, Category $category, Tag $tag)
     {
@@ -143,7 +144,7 @@ class HomeController extends Controller
         $sitemap->setCache('laravel.sitemap', 3600);
 
         // add item to the sitemap (url, date, priority, freq)
-        $sitemap->add(link_to('contact'), date('Y-m-d') . 'T12:30:00+02:00', '0.5', 'monthly');
+        $sitemap->add($this->request->root() . '/contact', date('Y-m-d') . 'T12:30:00+02:00', '0.5', 'monthly');
         // get all posts from db
         $posts = $this->post->getAll('published');
 
@@ -181,9 +182,9 @@ class HomeController extends Controller
 
         Mail::send('emails.contact', $data, function ($message) use ($request) {
             $message
-            ->from($request->input('email'), $request->input('name'))
-            ->to(Cache::get('settings')['admin_email'])
-            ->subject(Cache::get('settings')['site_name'] . ' Contact Form Message');
+                ->from($request->input('email'), $request->input('name'))
+                ->to(Cache::get('settings')['admin_email'])
+                ->subject(Cache::get('settings')['site_name'] . ' Contact Form Message');
         });
 
         return redirect()->to('contact')->with('success', 'You message has been sent! We\'ll be in touch soon.');
