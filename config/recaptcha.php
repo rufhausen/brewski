@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -14,7 +14,7 @@ return array(
     |
      */
     'public_key'  => env('RECAPTCHA_PUBLIC_KEY'),
-    'private_key' => env('RECAPTCHA_PUBLIC_KEY'),
+    'private_key' => env('RECAPTCHA_PRIVATE_KEY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -45,11 +45,11 @@ return array(
     | Various options for the driver
     |
      */
-    'options'     => array(
+    'options'     => [
 
         'curl_timeout' => 1,
 
-    ),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -61,4 +61,4 @@ return array(
      */
     'version'     => 2,
 
-);
+];
