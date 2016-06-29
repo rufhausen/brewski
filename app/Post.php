@@ -1,10 +1,13 @@
-<?php namespace App;
+<?php
+
+namespace App;
 
 use App\Category;
-use App\Post as Post;
 use App\Tag as Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB as DB;
+use Illuminate\Support\Collection;
+use Elasticsearch\ClientBuilder;
 
 class Post extends Model
 {
@@ -38,6 +41,7 @@ class Post extends Model
     {
         $query->whereStatus('published')->whereRaw('published_at <= TIMESTAMP(NOW())');
     }
+
     public function scopeDraft($query)
     {
         $query->whereStatus('draft');
@@ -82,6 +86,7 @@ class Post extends Model
     {
         return $this->belongsTo('App\User', 'creator_id');
     }
+
     public function categories()
     {
         return $this->belongsToMany('App\Category');
@@ -94,12 +99,11 @@ class Post extends Model
 
     public function doUpdate($id, $request)
     {
-
         DB::transaction(function () use ($id, $request) {
 
-            $post = Post::find($id);
-            $post->title = $request->input('title');
-            $post->content = $request->input('content');
+            $post                 = Post::find($id);
+            $post->title          = $request->input('title');
+            $post->content        = $request->input('content');
             $post->allow_comments = ($request->input('allow_comments') !== null ? 1 : null);
 
             if (($request->input('status') !== null) && ($request->input('status') == 'published')) {
@@ -110,11 +114,14 @@ class Post extends Model
                     $post->published_at = new \DateTime;
                 }
             } else {
-                $post->status = 'draft';
+                $post->status       = 'draft';
                 $post->published_at = null;
             }
-            $post->save();
+            
             $post->slug = $this->makeSlug($post);
+            $post->save();
+
+            $this->indexToElasticSearch($post);
 
             $post->setCategories($post, $request->input('category_id'), $request->input('new_category'));
 
@@ -122,17 +129,15 @@ class Post extends Model
 
             //\File::cleanDirectory(app('http_cache.cache_dir'));
         });
-
     }
 
     public function store($request)
     {
-
         DB::transaction(function () use ($request) {
-            $post = new Post;
-            $post->title = $request->input('title');
-            $post->content = $request->input('content');
-            $post->creator_id = \Auth::user()->id;
+            $post                 = new Post;
+            $post->title          = $request->input('title');
+            $post->content        = $request->input('content');
+            $post->creator_id     = \Auth::user()->id;
             $post->allow_comments = ($request->input('allow_comments') == 'on' ? 1 : 0);
 
             if ($request->input('status') == 'published') {
@@ -142,15 +147,16 @@ class Post extends Model
                 } else {
                     $post->published_at = new \DateTime;
                 }
-
             } else {
-                $post->status = 'draft';
+                $post->status       = 'draft';
                 $post->published_at = null;
             }
             $post->save();
 
             $post->slug = $this->makeSlug($post);
             $post->save();
+
+            $this->indexToElasticSearch($post);
 
             $this->new_post = $post;
 
@@ -164,14 +170,14 @@ class Post extends Model
         return $this->new_post;
     }
 
-    public function search($q)
-    {
-        $posts = self::published()->where(function ($query) use ($q) {
-            return $query->whereRaw('title LIKE ? OR content LIKE ?', ["%$q%", "%$q%"]);
-        })->get();
-
-        return $posts;
-    }
+    // public function search($q)
+    // {
+    //     $posts = self::published()->where(function ($query) use ($q) {
+    //         return $query->whereRaw('title LIKE ? OR content LIKE ?', ["%$q%", "%$q%"]);
+    //     })->get();
+    //
+    //     return $posts;
+    // }
 
     public static function getAll($type = 'all', $paginate = null, $sort_by = 'created_at', $order = 'desc', $limit = null)
     {
@@ -222,12 +228,11 @@ class Post extends Model
                 $current_tag = Tag::whereSlug(str_slug($value))->first();
 
                 if (!$current_tag) {
-                    $new_tag = Tag::create([
+                    $new_tag    = Tag::create([
                         'name' => $value,
                         'slug' => str_slug($value),
                     ]);
                     $add_tag_id = $new_tag->id;
-
                 } else {
                     $add_tag_id = $current_tag->id;
                 }
@@ -235,7 +240,6 @@ class Post extends Model
             }
             $post->tags()->attach($post_tags);
         }
-
     }
 
     public static function setCategories($post, $category_ids = null, $new_category = null)
@@ -250,7 +254,7 @@ class Post extends Model
                     'name' => $new_category,
                     'slug' => str_slug($new_category),
                 ]);
-                $add_cat_id = $new_category->id;
+                $add_cat_id   = $new_category->id;
             } else {
                 $add_cat_id = $current_category->id;
             }
@@ -279,6 +283,36 @@ class Post extends Model
         }
 
         return $this->content;
+    }
 
+    public function indexToElasticSearch($post)
+    {
+        $es = ClientBuilder::create()->build();
+
+        $es->index([
+            'index' => 'brewski',
+            'type' => 'post',
+            'id' => $post->id,
+            'body' => $post->toArray()
+        ]);
+    }
+
+    public static function makeCollectionFromElasticSearch($array)
+    {
+        if ($array['hits']['hits'] !== null) {
+            $results = [];
+            foreach ($array['hits']['hits'] as $post) {
+                $results[] = $post;
+            }
+
+            return Collection::make(array_map(function ($r) {
+                $post = new static();
+                $post->newInstance($r['_source'], true);
+                $post->setRawAttributes($r['_source'], true);
+                return $post;
+            }, $results));
+        }
+
+        return new Collection;
     }
 }

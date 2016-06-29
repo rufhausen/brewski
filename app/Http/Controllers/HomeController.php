@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail as Mail;
 use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\URL as URL;
 use Symfony\Component\Console\Input\Input as Input;
+use Elasticsearch\ClientBuilder;
 
 class HomeController extends Controller
 {
@@ -51,8 +52,28 @@ class HomeController extends Controller
 
     public function getSearch()
     {
-        $q     = htmlentities($this->request->input('q'));
-        $posts = $this->post->search($q);
+        $q  = htmlentities($this->request->input('q'));
+        $es = ClientBuilder::create()->build();
+
+        $params = [
+            'index' => 'brewski',
+            'type'  => 'post',
+            'body'  => [
+                'query' => [
+                    'bool' => [
+                        'should' => [
+                            ['match' => ['content' => $q]],
+                            ['match' => ['title' => $q]],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $response = $es->search($params);
+        $posts = Post::makeCollectionFromElasticSearch($response);
+
+        //$posts = $this->post->search($q);
 
         return view('home.search', compact('q', 'posts'));
     }

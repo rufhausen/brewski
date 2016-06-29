@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
 use App\User as User;
 
 class UsersController extends Controller
@@ -8,10 +9,14 @@ class UsersController extends Controller
 
     protected $user;
 
+    /**
+     * @param User $user
+     */
     public function __construct(User $user)
     {
         $this->user = $user;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +51,7 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int        $id
      * @return Response
      */
     public function edit($id)
@@ -59,18 +64,22 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int        $id
      * @return Response
      */
-    public function update($id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+        $user = $this->user->find($id);
+        $user->update($request->input());
+
+        return view('admin.users.edit', compact('user'));
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int        $id
      * @return Response
      */
     public function destroy($id)
