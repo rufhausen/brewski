@@ -1,29 +1,12 @@
 <?php
 
-use Elasticsearch\ClientBuilder;
-
-Route::get('elastic-update-all', function()
-{
-    $es = ClientBuilder::create()->build();
-
-    $posts = App\Post::whereNotNull('published_at')->get();
-
-    foreach ($posts as $post) {
-        $es->index([
-            'index' => 'brewski',
-            'type' => 'post',
-            'id' => $post->id,
-            'body' => $post->toArray()
-        ]);
-    }
-});
-
 if (app()->environment() == 'local') {
     Route::get('test', function () {
-        
+
     });
 }
 Route::get('/', 'HomeController@getIndex');
+Route::get('elastic-update-all', 'HomeController@getElasticUpdateAll');
 Route::get('search', ['as' => 'search', 'uses' => 'HomeController@getSearch']);
 Route::get('contact', 'HomeController@getContact');
 Route::post('contact', ['as' => 'post_contact', 'uses' => 'HomeController@postContact']);

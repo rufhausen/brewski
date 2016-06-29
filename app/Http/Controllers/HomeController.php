@@ -50,6 +50,22 @@ class HomeController extends Controller
         return view('home.index', compact('posts'));
     }
 
+    public function getElasticUpdateAll()
+    {
+        $es = ClientBuilder::create()->build();
+
+        $posts = Post::whereNotNull('published_at')->get();
+
+        foreach ($posts as $post) {
+            $es->index([
+                'index' => 'brewski',
+                'type' => 'post',
+                'id' => $post->id,
+                'body' => $post->toArray()
+            ]);
+        }
+    }
+
     public function getSearch()
     {
         $q  = htmlentities($this->request->input('q'));
