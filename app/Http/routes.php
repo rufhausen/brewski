@@ -18,31 +18,31 @@ if (app()->environment() == 'local') {
              ]);
          }
 
-        $params = [
-            'index' => 'brewski',
-            'type'  => 'post',
-            'body'  => [
-                'query' => [
-                    'bool' => [
-                        'should' => [
-                            ['match' => ['content' => 'coldfusion']],
-                            ['match' => ['title' => 'php']],
-                        ],
-                    ],
-                ],
-            ],
-        ];
+        //$params = [
+        //    'index' => 'brewski',
+        //    'type'  => 'post',
+        //    'body'  => [
+        //        'query' => [
+        //            'bool' => [
+        //                'should' => [
+        //                    ['match' => ['content' => 'coldfusion']],
+        //                    ['match' => ['title' => 'php']],
+        //                ],
+        //            ],
+        //        ],
+        //    ],
+        //];
 
-        //return json_encode($params);
-
-        $response = $es->search($params);
-
-        if (count($response['hits']['hits'])) {
-            foreach ($response['hits']['hits'] as $hit) {
-                $post = $hit['_source'];
-                echo $post['title'] . '<br />';
-            }
-        }
+        ////return json_encode($params);
+        //
+        //$response = $es->search($params);
+        //
+        //if (count($response['hits']['hits'])) {
+        //    foreach ($response['hits']['hits'] as $hit) {
+        //        $post = $hit['_source'];
+        //        echo $post['title'] . '<br />';
+        //    }
+        //}
     });
 }
 Route::get('/', 'HomeController@getIndex');
