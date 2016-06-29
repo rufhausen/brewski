@@ -2,47 +2,25 @@
 
 use Elasticsearch\ClientBuilder;
 
+Route::get('elastic-update-all', function()
+{
+    $es = ClientBuilder::create()->build();
+
+    $posts = App\Post::whereNotNull('published_at')->get();
+
+    foreach ($posts as $post) {
+        $es->index([
+            'index' => 'brewski',
+            'type' => 'post',
+            'id' => $post->id,
+            'body' => $post->toArray()
+        ]);
+    }
+});
+
 if (app()->environment() == 'local') {
     Route::get('test', function () {
-
-        $es = ClientBuilder::create()->build();
-
-             $posts = App\Post::whereNotNull('published_at')->get();
-
-         foreach ($posts as $post) {
-             $es->index([
-                 'index' => 'brewski',
-                 'type' => 'post',
-                 'id' => $post->id,
-                 'body' => $post->toArray()
-             ]);
-         }
-
-        //$params = [
-        //    'index' => 'brewski',
-        //    'type'  => 'post',
-        //    'body'  => [
-        //        'query' => [
-        //            'bool' => [
-        //                'should' => [
-        //                    ['match' => ['content' => 'coldfusion']],
-        //                    ['match' => ['title' => 'php']],
-        //                ],
-        //            ],
-        //        ],
-        //    ],
-        //];
-
-        ////return json_encode($params);
-        //
-        //$response = $es->search($params);
-        //
-        //if (count($response['hits']['hits'])) {
-        //    foreach ($response['hits']['hits'] as $hit) {
-        //        $post = $hit['_source'];
-        //        echo $post['title'] . '<br />';
-        //    }
-        //}
+        
     });
 }
 Route::get('/', 'HomeController@getIndex');
