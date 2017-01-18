@@ -21,6 +21,7 @@ test:
     ignore:
       - "app/views"
     standard: "PSR1,PSR2"
+    allow_failures: true
   php_mess_detector:
     path: "app"
     ignore:

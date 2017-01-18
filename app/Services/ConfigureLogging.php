@@ -20,9 +20,9 @@ class ConfigureLogging extends BaseConfigureLogging
      */
     protected function configureHandlers(Application $app, Writer $log)
     {
-        $logger          = $log->getMonolog();
-        $logfile_handler = new StreamHandler(storage_path() . '/logs/laravel.log');
-        $logger->pushHandler($logfile_handler);
+        $logger         = $log->getMonolog();
+        $logfileHandler = new StreamHandler(storage_path() . '/logs/laravel.log');
+        $logger->pushHandler($logfileHandler);
         $logger->pushProcessor(new \Monolog\Processor\MemoryUsageProcessor);
         $logger->pushProcessor(new \Monolog\Processor\MemoryPeakUsageProcessor);
         $logger->pushProcessor(new \Monolog\Processor\WebProcessor);

@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin\Auth;
+<?php
+
+namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -64,14 +66,13 @@ class PasswordController extends Controller
         });
 
         switch ($response) {
-            case Password::PASSWORD_RESET:
-                return redirect($this->redirectPath());
+        case Password::PASSWORD_RESET:
+            return redirect($this->redirectPath());
 
-            default:
-                return redirect()->back()
-                                 ->withInput($request->only('email'))
-                                 ->withErrors(['email' => trans($response)]);
+        default:
+            return redirect()->back()
+                             ->withInput($request->only('email'))
+                             ->withErrors(['email' => trans($response)]);
         }
     }
-
 }

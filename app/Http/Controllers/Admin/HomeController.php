@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post as Post;
@@ -26,5 +28,4 @@ class HomeController extends Controller
         $posts = $this->post->getAll(null, 10);
         return view('admin.index', compact('posts'));
     }
-
 }

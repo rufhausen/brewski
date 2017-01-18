@@ -177,9 +177,9 @@ class Post extends Model
     //     return $posts;
     // }
 
-    public static function getAll($type = 'all', $paginate = null, $sort_by = 'created_at', $order = 'desc', $limit = null)
+    public static function getAll($type = 'all', $paginate = null, $sortBy = 'created_at', $order = 'desc', $limit = null)
     {
-        $posts = self::orderBy($sort_by, $order);
+        $posts = self::orderBy($sortBy, $order);
 
         switch ($type) {
         case 'published':
@@ -207,9 +207,9 @@ class Post extends Model
 
     public static function makeSlug($post)
     {
-        $current_slugs = self::whereSlug(str_slug($post->title))->where('id', '<>', $post->id)->get();
+        $currentSlugs = self::whereSlug(str_slug($post->title))->where('id', '<>', $post->id)->get();
 
-        if ($current_slugs->count()) {
+        if ($currentSlugs->count()) {
             return str_slug($post->title . '-' . $post->id);
         }
 
