@@ -8,18 +8,19 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "laravel/framework": "5.2.x",
+    "php": ">=5.6.4",
+    "laravel/framework": "5.3.*",
     "laravelcollective/html": "dev-master",
     "greggilbert/recaptcha": "dev-master",
     "roumen/feed": "^2.9@dev",
     "roumen/sitemap": "^2.5@dev"
   },
   "require-dev": {
-    "symfony/dom-crawler": "~3.0",
-    "symfony/css-selector": "~3.0",
+    "symfony/css-selector": "3.1.*",
+    "symfony/dom-crawler": "3.1.*",
     "fzaninotto/faker": "1.5.*",
     "mockery/mockery": "0.9.*",
-    "phpunit/phpunit": "~4.0",
+    "phpunit/phpunit": "~5.0",
     "phpspec/phpspec": "~2.1",
     "laracasts/generators": "dev-master",
     "elasticsearch/elasticsearch": "~2.0"
@@ -55,7 +56,8 @@
     ]
   },
   "config": {
-    "preferred-install": "dist"
+    "preferred-install": "dist",
+    "sort-packages": true
   },
   "minimum-stability": "dev",
   "prefer-stable": true

@@ -1,15 +1,16 @@
-<?php namespace App\Http\Controllers\Admin\Auth;
+<?php
+
+namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use Validator;
 
 class AuthController extends Controller
 {
-
     protected $loginPath           = '/admin/auth/login';
     protected $redirectAfterLogout = '/admin/auth/login';
     protected $redirectTo          = '/admin';
@@ -24,7 +25,7 @@ class AuthController extends Controller
     |
      */
 
-    use AuthenticatesAndRegistersUsers;
+    use AuthenticatesUsers;
 
     /**
      * Create a new authentication controller instance.
@@ -77,24 +78,24 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postLogin(Request $request)
-    {
-        $this->validate($request, [
-            'email' => 'required|email', 'password' => 'required',
-        ]);
-
-        $credentials = $this->getCredentials($request);
-
-        if (Auth::attempt($credentials, $request->has('remember'))) {
-            return redirect()->intended($this->redirectPath());
-        }
-
-        return redirect($this->loginPath())
-            ->withInput($request->only('email', 'remember'))
-            ->withErrors([
-                'email' => $this->getFailedLoginMessage(),
-            ]);
-    }
+    // public function postLogin(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'email' => 'required|email', 'password' => 'required',
+    //     ]);
+    //
+    //     $credentials = $this->getCredentials($request);
+    //
+    //     if (Auth::attempt($credentials, $request->has('remember'))) {
+    //         return redirect()->intended($this->redirectPath());
+    //     }
+    //
+    //     return redirect($this->loginPath())
+    //         ->withInput($request->only('email', 'remember'))
+    //         ->withErrors([
+    //             'email' => $this->getFailedLoginMessage(),
+    //         ]);
+    // }
 
     /**
      * Log the user out of the application.

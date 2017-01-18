@@ -1,0 +1,40 @@
+build_settings:
+  verbose: false
+  prefer_symlink: false
+
+setup:
+  composer:
+    action: "install"
+    prefer_dist: false
+env:
+    APPLICATION_ENV: "test"
+test:
+  php_parallel_lint:
+    ignore:
+      - vendor/
+      - _ide_helper.php
+  php_code_sniffer:
+    #standard: "/phpcs.xml"
+    #allowed_errors: 0
+    #allowed_warnings: -1 #unlimited
+    path: "app"
+    ignore:
+      - "app/views"
+    standard: "PSR1,PSR2"
+  php_mess_detector:
+    path: "app"
+    ignore:
+        - 'vendor'
+    rules:
+    #   - "cleancode"
+      - "controversial"
+      - "codesize"
+      - "design"
+      - "naming"
+      - "unusedcode"
+    allow_failures: true
+    zero_config: true # do not make build as failed if something was detected
+  php_unit:
+    config:
+      - "phpunit.xml"
+    path: "tests/"

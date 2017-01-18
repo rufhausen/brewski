@@ -15,7 +15,7 @@
     @foreach($posts as $post)
     <tr>
       <th scope="row">{{ $post->id }}</th>
-      <td>{!! link_to_route('admin.posts.edit', $post->title, $post->id) !!}</td>
+      <td>{!! link_to_route('posts.edit', $post->title, $post->id) !!}</td>
       <td>{{ $post->created_at }}</td>
       <td>{{ $post->status }}</td>
     </tr>

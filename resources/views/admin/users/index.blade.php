@@ -16,7 +16,7 @@
         @foreach($users as $user)
         <tr>
           <th scope="row">{{ $user->id }}</th>
-          <td>{!! link_to_route('admin.users.edit', $user->full_name, $user->id) !!}</td>
+          <td>{!! link_to_route('users.edit', $user->full_name, $user->id) !!}</td>
           <td>{{ $user->created_at }}</td>
           <td>{{ $user->status }}</td>
         </tr>

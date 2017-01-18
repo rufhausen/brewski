@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        {!!Form::open(['route' => ['admin.users.update', $user->id], 'method' => 'put'])!!}
+        {!!Form::open(['route' => ['users.update', $user->id], 'method' => 'put'])!!}
         <div class="form-group">
             {!!Form::label('first_name','First Name')!!}
             {!!Form::text('first_name',$user->first_name,['class' => 'form-control'])!!}

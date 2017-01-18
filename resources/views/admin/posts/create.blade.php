@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-9">
-        {!!Form::open(['method' => 'POST','route' => 'admin.posts.store', 'role' => 'form','class' => 'form'])!!}
+        {!!Form::open(['method' => 'POST','route' => 'posts.store', 'role' => 'form','class' => 'form'])!!}
         {!!Form::label('title','Post Title')!!}
         {!!Form::text('title', null, ['class' => 'form-control'])!!}
         {!!Form::label('content','Content')!!}

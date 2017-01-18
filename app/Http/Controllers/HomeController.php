@@ -1,10 +1,13 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactRequest;
 use App\Post as Post;
 use App\Tag;
+use Elasticsearch\ClientBuilder;
 use Illuminate\Contracts\View\View as View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App as App;
@@ -13,7 +16,6 @@ use Illuminate\Support\Facades\Mail as Mail;
 use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\URL as URL;
 use Symfony\Component\Console\Input\Input as Input;
-use Elasticsearch\ClientBuilder;
 
 class HomeController extends Controller
 {
@@ -52,16 +54,38 @@ class HomeController extends Controller
 
     public function getElasticUpdateAll()
     {
-        $es = ClientBuilder::create()->build();
+        $es           = ClientBuilder::create()->build();
+        //$deleteParams = [
+        //    'index' => 'brewski',
+        //];
+        //$response     = $es->indices()->delete($deleteParams);
+        //
+        //$params = [
+        //    'index' => 'brewski',
+        //    'body'  => [
+        //        'settings' => [
+        //            'number_of_shards'   => 2,
+        //            'number_of_replicas' => 0,
+        //        ],
+        //    ],
+        //];
+        //
+        //$response = $es->indices()->create($params);
+
+        //return $response;
 
         $posts = Post::whereNotNull('published_at')->get();
 
         foreach ($posts as $post) {
+            $post->post_tags = array_column($post->tags->toArray(), 'name');
+            unset($post->tags);
+            $post->tags = $post->post_tags;
+            unset($post->post_tags);
             $es->index([
                 'index' => 'brewski',
-                'type' => 'post',
-                'id' => $post->id,
-                'body' => $post->toArray()
+                'type'  => 'post',
+                'id'    => $post->id,
+                'body'  => $post->toArray(),
             ]);
         }
     }
@@ -80,6 +104,7 @@ class HomeController extends Controller
                         'should' => [
                             ['match' => ['content' => $q]],
                             ['match' => ['title' => $q]],
+                            ['match' => ['tags' => $q]],
                         ],
                     ],
                 ],
@@ -87,6 +112,7 @@ class HomeController extends Controller
         ];
 
         $response = $es->search($params);
+
         $posts = Post::makeCollectionFromElasticSearch($response);
 
         //$posts = $this->post->search($q);
@@ -99,7 +125,6 @@ class HomeController extends Controller
      */
     public function getPost($slug)
     {
-
         $slug = htmlentities($this->request->segment(3));
         $post = $this->post->getBySlug($slug);
         if (!$post) {
@@ -157,7 +182,8 @@ class HomeController extends Controller
         $feed->description = \Cache::get('settings')['meta_description'];
         $feed->logo        = '';
         $feed->link        = link_to('feed');
-        $feed->pubdate     = $posts{0}->published_at;
+        $feed->pubdate     = $posts{0}
+            ->published_at;
         $feed->lang        = 'en';
 
         foreach ($posts as $post) {
@@ -174,7 +200,7 @@ class HomeController extends Controller
     public function getSiteMap()
     {
         // create new sitemap object
-        $sitemap = App::make("sitemap");
+        $sitemap = App::make('sitemap');
 
         // set cache (key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean))
         // by default cache is disabled

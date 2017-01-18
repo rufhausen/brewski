@@ -4,15 +4,14 @@ namespace App;
 
 use App\Category;
 use App\Tag as Tag;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB as DB;
-use Illuminate\Support\Collection;
 use Elasticsearch\ClientBuilder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB as DB;
 
 class Post extends Model
 {
-
-    protected $appends = ['year', 'month'];
+    protected $appends = ['year', 'month', 'url'];
 
     protected $fillable = ['title', 'content', 'allow_comments', 'published_at', 'status'];
 
@@ -100,10 +99,9 @@ class Post extends Model
     public function doUpdate($id, $request)
     {
         DB::transaction(function () use ($id, $request) {
-
-            $post                 = Post::find($id);
-            $post->title          = $request->input('title');
-            $post->content        = $request->input('content');
+            $post = Post::find($id);
+            $post->title = $request->input('title');
+            $post->content = $request->input('content');
             $post->allow_comments = ($request->input('allow_comments') !== null ? 1 : null);
 
             if (($request->input('status') !== null) && ($request->input('status') == 'published')) {
@@ -114,10 +112,10 @@ class Post extends Model
                     $post->published_at = new \DateTime;
                 }
             } else {
-                $post->status       = 'draft';
+                $post->status = 'draft';
                 $post->published_at = null;
             }
-            
+
             $post->slug = $this->makeSlug($post);
             $post->save();
 
@@ -133,11 +131,12 @@ class Post extends Model
 
     public function store($request)
     {
+        // dd($request->all());
         DB::transaction(function () use ($request) {
-            $post                 = new Post;
-            $post->title          = $request->input('title');
-            $post->content        = $request->input('content');
-            $post->creator_id     = \Auth::user()->id;
+            $post = new Post;
+            $post->title = $request->input('title');
+            $post->content = $request->input('content');
+            $post->creator_id = \Auth::user()->id;
             $post->allow_comments = ($request->input('allow_comments') == 'on' ? 1 : 0);
 
             if ($request->input('status') == 'published') {
@@ -148,7 +147,7 @@ class Post extends Model
                     $post->published_at = new \DateTime;
                 }
             } else {
-                $post->status       = 'draft';
+                $post->status = 'draft';
                 $post->published_at = null;
             }
             $post->save();
@@ -161,10 +160,9 @@ class Post extends Model
             $this->new_post = $post;
 
             $post->setCategories($post, $request->input('category_id'), $request->input('new_category'));
-            $post->setTags($post, commaListToArray($request->input('tags')));
+            $post->setTags($post, $request->input('tags'));
 
             //\File::cleanDirectory(app('http_cache.cache_dir'));
-
         });
 
         return $this->new_post;
@@ -184,14 +182,14 @@ class Post extends Model
         $posts = self::orderBy($sort_by, $order);
 
         switch ($type) {
-            case 'published':
-                $posts = $posts->published();
-                break;
-            case 'draft':
-                $posts = $posts->draft();
-                break;
-            default:
-                $posts = $posts;
+        case 'published':
+            $posts = $posts->published();
+            break;
+        case 'draft':
+            $posts = $posts->draft();
+            break;
+        default:
+            $posts = $posts;
         }
 
         if (!is_null($limit)) {
@@ -228,7 +226,7 @@ class Post extends Model
                 $current_tag = Tag::whereSlug(str_slug($value))->first();
 
                 if (!$current_tag) {
-                    $new_tag    = Tag::create([
+                    $new_tag = Tag::create([
                         'name' => $value,
                         'slug' => str_slug($value),
                     ]);
@@ -254,7 +252,7 @@ class Post extends Model
                     'name' => $new_category,
                     'slug' => str_slug($new_category),
                 ]);
-                $add_cat_id   = $new_category->id;
+                $add_cat_id = $new_category->id;
             } else {
                 $add_cat_id = $current_category->id;
             }
@@ -291,9 +289,9 @@ class Post extends Model
 
         $es->index([
             'index' => 'brewski',
-            'type' => 'post',
-            'id' => $post->id,
-            'body' => $post->toArray()
+            'type'  => 'post',
+            'id'    => $post->id,
+            'body'  => $post->toArray(),
         ]);
     }
 

@@ -21,7 +21,7 @@
               @foreach($posts as $post)
               <tr>
                   <th scope="row">{{ $post->id }}</th>
-                  <td>{!! link_to_route('admin.posts.edit', $post->title, $post->id) !!}</td>
+                  <td>{!! link_to_route('posts.edit', $post->title, $post->id) !!}</td>
                   <td>{{ $post->creator->full_name }}</td>
                   <td>{{ $post->created_at->diffForHumans() }}</td>
               </tr>

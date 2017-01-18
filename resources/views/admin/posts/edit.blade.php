@@ -9,7 +9,7 @@
             <strong>Live URL: </strong>{!!link_to($post->url)!!}
         </div>
         @endif
-        {!! Form::open(['method' => 'PUT','route' => ['admin.posts.update', $post->id],'role' => 'form','class' =>'form'])!!}
+        {!! Form::open(['method' => 'PUT','route' => ['posts.update', $post->id],'role' => 'form','class' =>'form'])!!}
         <div class="form-group">
             {!! Form::label('title','Post Title')!!}
             {!! Form::text('title', $post->title, ['class' => 'form-control'])!!}
@@ -56,7 +56,7 @@
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="category_id[]" value="{{$cat->id}}" {{(in_array($cat->id,
-                        $post->categories->lists('id')->toArray()) ? 'checked="checked"' : null)}}>
+                        $post->categories->pluck('id')->toArray()) ? 'checked="checked"' : null)}}>
                         {{$cat->name}}
                     </label>
                 </div>
@@ -70,7 +70,7 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <input type="select" id="post-tags" multiple="multiple" name="tags" value="{{arrayToCommaList($post->tags->lists('name')->toArray())}}">
+                    <input type="select" id="post-tags" multiple="multiple" name="tags" value="{{arrayToCommaList($post->tags->pluck('name')->toArray())}}">
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@ aria-hidden="true">
         </div>
         <div class="modal-footer">
             {!! Form::open(['method' => 'DELETE', 'route' =>
-                ['admin.posts.destroy',$post->id],'role' =>
+                ['posts.destroy',$post->id],'role' =>
                 'form','class' => 'form'])!!}&nbsp
                 {!! Form::button('Cancel',['class' => 'btn btn-default','data-dismiss' => 'modal'])!!}
                 {!! Form::submit('Yes',['class' => 'btn btn-primary'])!!}

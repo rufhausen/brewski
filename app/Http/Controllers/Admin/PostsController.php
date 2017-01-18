@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
@@ -8,7 +10,6 @@ use App\Post as Post;
 
 class PostsController extends Controller
 {
-
     protected $post;
     protected $category;
 
@@ -74,7 +75,6 @@ class PostsController extends Controller
      */
     public function update(UpdatePostRequest $request, $id)
     {
-
         $this->post->doUpdate($id, $request);
 
         return redirect('admin/posts/' . $id . '/edit')->withSuccess('Post Updated!');
