@@ -1,4 +1,6 @@
-<?php namespace App\Http\ViewComposers;
+<?php
+
+namespace App\Http\ViewComposers;
 
 use App\Post;
 use Illuminate\Contracts\View\View;
@@ -39,5 +41,4 @@ class RecentPostsComposer
         }
         $view->with('recent_posts', Cache::get('recent_posts'));
     }
-
 }

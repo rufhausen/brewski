@@ -1,4 +1,6 @@
-<?php namespace App\Http\ViewComposers;
+<?php
+
+namespace App\Http\ViewComposers;
 
 use App\Tag;
 use Illuminate\Contracts\View\View;
@@ -35,5 +37,4 @@ class TagsComposer
     {
         $view->with('tags_list', $this->tags->all());
     }
-
 }

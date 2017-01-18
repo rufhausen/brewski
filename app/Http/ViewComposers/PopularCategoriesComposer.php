@@ -1,4 +1,6 @@
-<?php namespace App\Http\ViewComposers;
+<?php
+
+namespace App\Http\ViewComposers;
 
 use App\Category;
 use Illuminate\Contracts\View\View;
@@ -39,5 +41,4 @@ class PopularCategoriesComposer
 
         $view->with('popular_categories', Cache::get('popular_categories'));
     }
-
 }

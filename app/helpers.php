@@ -30,7 +30,6 @@ function settings($item)
  */
 function arrayToCommaList($arr)
 {
-
     if (!empty($arr)) {
         return implode(',', $arr);
     }

@@ -19,7 +19,6 @@ use Symfony\Component\Console\Input\Input as Input;
 
 class HomeController extends Controller
 {
-
     protected $request;
     protected $post;
     protected $category;
@@ -54,7 +53,7 @@ class HomeController extends Controller
 
     public function getElasticUpdateAll()
     {
-        $es           = ClientBuilder::create()->build();
+        $es = ClientBuilder::create()->build();
         //$deleteParams = [
         //    'index' => 'brewski',
         //];
@@ -184,7 +183,7 @@ class HomeController extends Controller
         $feed->link        = link_to('feed');
         $feed->pubdate     = $posts{0}
             ->published_at;
-        $feed->lang        = 'en';
+        $feed->lang = 'en';
 
         foreach ($posts as $post) {
             // set item's title, author, url, pubdate, description and content
@@ -245,9 +244,9 @@ class HomeController extends Controller
 
         Mail::send('emails.contact', $data, function ($message) use ($request) {
             $message
-                ->from($request->input('email'), $request->input('name'))
-                ->to(Cache::get('settings')['admin_email'])
-                ->subject(Cache::get('settings')['site_name'] . ' Contact Form Message');
+            ->from($request->input('email'), $request->input('name'))
+            ->to(Cache::get('settings')['admin_email'])
+            ->subject(Cache::get('settings')['site_name'] . ' Contact Form Message');
         });
 
         return redirect()->to('contact')->with('success', 'You message has been sent! We\'ll be in touch soon.');

@@ -1,4 +1,6 @@
-<?php namespace App;
+<?php
+
+namespace App;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -41,9 +43,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('App\Post', 'id', 'creator_id');
     }
 
-    public static function getAll($paginate = null, $sort_by = 'created_at', $order = 'desc')
+    public static function getAll($paginate = null, $sortBy = 'created_at', $order = 'desc')
     {
-        $users = self::orderBy($sort_by, $order);
+        $users = self::orderBy($sortBy, $order);
 
         if (!is_null($paginate)) {
             $users = $users->paginate($paginate);

@@ -1,4 +1,6 @@
-<?php namespace App\Http\ViewComposers;
+<?php
+
+namespace App\Http\ViewComposers;
 
 use Illuminate\Contracts\View\View;
 
@@ -13,7 +15,6 @@ class MetaComposer
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -26,5 +27,4 @@ class MetaComposer
     {
         $view->with('meta', 'foo');
     }
-
 }

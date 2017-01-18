@@ -1,4 +1,6 @@
-<?php namespace App\Http\ViewComposers;
+<?php
+
+namespace App\Http\ViewComposers;
 
 use App\Category;
 use Illuminate\Contracts\View\View;
@@ -35,5 +37,4 @@ class CategoriesComposer
     {
         $view->with('categories_list', $this->categories->all());
     }
-
 }

@@ -51,13 +51,13 @@ class Post extends Model
         return self::whereSlug($slug)->first();
     }
 
-    public function getByCategorySlug($slug, $per_page = null)
+    public function getByCategorySlug($slug, $perPage = null)
     {
         $posts = self::whereHas('categories', function ($q) use ($slug) {
             $q->whereRaw('slug = ?', [$slug]);
         });
         $posts = $posts->with('tags', 'categories')->orderBy('created_at', 'DESC');
-        if (!empty($per_page)) {
+        if (!empty($perPage)) {
             $posts = $posts->paginate(5);
         } else {
             $posts = $posts->get();
@@ -66,13 +66,13 @@ class Post extends Model
         return $posts;
     }
 
-    public function getByTagSlug($slug, $per_page = null)
+    public function getByTagSlug($slug, $perPage = null)
     {
         $posts = self::whereHas('tags', function ($q) use ($slug) {
             $q->whereRaw('slug = ?', [$slug]);
         });
         $posts = $posts->with('tags', 'categories')->orderBy('created_at', 'DESC');
-        if (!empty($per_page)) {
+        if (!empty($perPage)) {
             $posts = $posts->paginate(5);
         } else {
             $posts = $posts->get();
@@ -219,51 +219,51 @@ class Post extends Model
     public static function setTags($post, $tags = null)
     {
         $post->tags()->detach();
-        $post_tags = [];
+        $postTags = [];
 
         if (isset($tags) && (!empty($tags))) {
             foreach ($tags as $key => $value) {
-                $current_tag = Tag::whereSlug(str_slug($value))->first();
+                $currentTag = Tag::whereSlug(str_slug($value))->first();
 
-                if (!$current_tag) {
-                    $new_tag = Tag::create([
+                if (!$currentTag) {
+                    $newTag = Tag::create([
                         'name' => $value,
                         'slug' => str_slug($value),
                     ]);
-                    $add_tag_id = $new_tag->id;
+                    $addTagId = $newTag->id;
                 } else {
-                    $add_tag_id = $current_tag->id;
+                    $addTagId = $currentTag->id;
                 }
-                array_push($post_tags, $add_tag_id);
+                array_push($postTags, $addTagId);
             }
-            $post->tags()->attach($post_tags);
+            $post->tags()->attach($postTags);
         }
     }
 
-    public static function setCategories($post, $category_ids = null, $new_category = null)
+    public static function setCategories($post, $categoryIds = null, $newCategory = null)
     {
         $post->categories()->detach();
 
-        if (isset($new_category) && (!empty($new_category))) {
-            $current_category = Category::whereSlug(str_slug($new_category))->first();
+        if (isset($newCategory) && (!empty($newCategory))) {
+            $currentCategory = Category::whereSlug(str_slug($newCategory))->first();
 
-            if (!$current_category) {
-                $new_category = Category::create([
-                    'name' => $new_category,
-                    'slug' => str_slug($new_category),
+            if (!$currentCategory) {
+                $newCategory = Category::create([
+                    'name' => $newCategory,
+                    'slug' => str_slug($newCategory),
                 ]);
-                $add_cat_id = $new_category->id;
+                $addCatid = $newCategory->id;
             } else {
-                $add_cat_id = $current_category->id;
+                $addCatid = $currentCategory->id;
             }
-            if (is_null($category_ids)) {
-                $category_ids = [];
+            if (is_null($categoryIds)) {
+                $categoryIds = [];
             }
-            array_push($category_ids, $add_cat_id);
+            array_push($categoryIds, $addCatid);
         }
 
-        if (isset($category_ids)) {
-            $post->categories()->attach($category_ids);
+        if (isset($categoryIds)) {
+            $post->categories()->attach($categoryIds);
         }
     }
 

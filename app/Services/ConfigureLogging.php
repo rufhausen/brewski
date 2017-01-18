@@ -1,4 +1,6 @@
-<?php namespace App\Services;
+<?php
+
+namespace App\Services;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Bootstrap\ConfigureLogging as BaseConfigureLogging;
@@ -25,5 +27,4 @@ class ConfigureLogging extends BaseConfigureLogging
         $logger->pushProcessor(new \Monolog\Processor\MemoryPeakUsageProcessor);
         $logger->pushProcessor(new \Monolog\Processor\WebProcessor);
     }
-
 }

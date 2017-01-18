@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -26,17 +28,17 @@ class SettingsController extends Controller
      */
     public function putUpdate(Request $request)
     {
-        $settings_array = $request->except('_token', '_method');
+        $settingsArray = $request->except('_token', '_method');
 
-        if (!in_array('enable_recaptcha', $settings_array)) {
-            $settings_array = $settings_array+['enable_recaptcha' => 0];
+        if (!in_array('enable_recaptcha', $settingsArray)) {
+            $settingsArray = $settingsArray+['enable_recaptcha' => 0];
         }
 
-        $settings = json_encode($settings_array);
+        $settings = json_encode($settingsArray);
 
         Storage::put('settings.json', $settings);
 
-        Cache::forever('settings', $settings_array);
+        Cache::forever('settings', $settingsArray);
 
         return redirect()->back()->withSuccess('updated');
     }

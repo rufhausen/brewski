@@ -1,4 +1,6 @@
-<?php namespace App\Http\Requests;
+<?php
+
+namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Cache as Cache;
@@ -30,8 +32,8 @@ class ContactRequest extends Request
         ];
 
         if (isset(Cache::get('settings')['recaptcha_enabled'])) {
-            $recaptcha_rule = ['recaptcha_response_field' => 'required|recaptcha'];
-            $rules          = array_merge($rules, $recaptcha_rule);
+            $recaptchaRule = ['recaptcha_response_field' => 'required|recaptcha'];
+            $rules         = array_merge($rules, $recaptchaRule);
         }
 
         return $rules;
